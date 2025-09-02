@@ -3,7 +3,7 @@ getMenu('menuPrincipal')
         const elemento = document.getElementById(_id);
         elemento.innerHTML = `<nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="inicio">
                 <img src="https://i.pinimg.com/736x/40/9c/2f/409c2f2f42c7c3589b5e5cddedba30c2.jpg" alt="Logo" width="30"
                     height="24" class="d-inline-block align-text-top">
                 El casino de los K
