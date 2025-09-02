@@ -4,32 +4,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Barra de navegación con Carrusel</title>
+    <title>Casino</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <link rel="scripts" href="scripts.js">
     <style>
         .body{
-            background-color: aliceblue;
+        background: #312e81;        
         }
 
         .navbar-brand {
             font-weight: 600;
         }
 
+
+        /* Carrusel de las imagenes, está principalmente centrado */
         .carousel-container {
             margin-top: 20px;
-            border-radius: 110px;
             overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 1050px;
+            display: flex;
+            border-radius: 100px;
+            justify-content: center; 
+            padding: 0px;          
         }
 
+        /*Texto ubicado bajo el carrusel, lo más parecido a canvas */
         .carousel-caption {
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 10px;
-            padding: 15px;
-            width: 100%;
-            margin-left: -167px;
+            padding: 20px;
+            background: rgba(142, 142, 142, 0.385); 
+            width: 100%;        
+            left: 0;           
+            right: 0;           
+            bottom: 0;         
+            padding: 20px;    
+            border-radius: 0 0 20px 20px; 
         }
 
         .btn-outline-success {
@@ -51,6 +60,16 @@
         }
         .modal{
             margin-top: 100%;
+        }
+
+        <!--Añadí estos últimos dos para que esté separado el modal y la imagen del casino esté redondeada y separada de esta-->
+        .container{
+            margin-top: 20px;
+        }
+        .bg-secondary{
+            border-radius: 200px;
+            max-width: 1050px;
+            margin-left: 125px;
         }
     </style>
 </head>
@@ -147,39 +166,6 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="button" class="btn btn-primary">Understood</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Quien hizo el container comente que hace -->
-        <div class="container content">
-            <div class="row">
-                <div class="col-lg-4 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title"><i class="bi bi-lightning-charge text-warning"></i> Característica 1</h5>
-                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
-                                tempor incididunt ut labore.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title"><i class="bi bi-award text-primary"></i> Característica 2</h5>
-                            <p class="card-text">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                aliquip ex ea commodo.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title"><i class="bi bi-heart text-danger"></i> Característica 3</h5>
-                            <p class="card-text">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-                                dolore eu fugiat nulla pariatur.</p>
-                        </div>
                     </div>
                 </div>
             </div>
