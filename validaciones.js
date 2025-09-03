@@ -2,17 +2,25 @@ function validarLogin(_btn) {
     _btn.classList.add('disabled');
     _btn.innerText = 'Validando...';
     const msg = document.getElementById('msgAlerta');
-    const username = document.getElementById('email');
+    const username = document.getElementById('username');
+    const email = document.getElementById('email');
     const password = document.getElementById('password');
+    const password2 = document.getElementById('password2');
     // alert('Validando Login');
     let errores = 0;
-    if (username.value == '') {
-        username.classList.add('is-invalid');
+    if (username.value == ''){
+        username.classList.add('is-invalid')
         errores++;
     } else {
-        //console.log(username.value);
-        username.classList.remove('is-invalid');
-        username.classList.add('is-valid');
+        
+    }
+    if (email.value == '') {
+        email.classList.add('is-invalid');
+        errores++;
+    } else {
+        //console.log(email.value);
+        email.classList.remove('is-invalid');
+        email.classList.add('is-valid');
     }
 
     if (password.value == '') {
@@ -22,6 +30,14 @@ function validarLogin(_btn) {
         // console.log(password.value);
         password.classList.remove('is-invalid');
         password.classList.add('is-valid');
+    }
+    if (password2.value != password.value){
+        password2.classList.add('is-invalid');
+        errores++;
+    } else {
+        // console.log(password2.value);
+        password2.classList.remove('is-invalid');
+        password2.classList.add('is-valid');
     }
 
     if (errores > 0) {
