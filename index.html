@@ -31,7 +31,6 @@
 
         /*Texto ubicado bajo el carrusel, lo más parecido a canvas */
         .carousel-caption {
-            padding: 20px;
             background: rgba(142, 142, 142, 0.385); 
             width: 100%;        
             left: 0;           
@@ -70,6 +69,62 @@
             border-radius: 200px;
             max-width: 1050px;
             margin-left: 125px;
+            padding: -10px;
+            margin-bottom: 35px;
+        }
+        /* De aquí para abajo es lo que son las cajitas del Acerca de: y los "programadores que trabajan" */
+        /* Ocupe h2 para modificar el texto que se ubica arriba de las cajitas*/
+        /* Intenté ser lo mas directo posible con los nombres de las cajitas :broken_heart: */
+        h2 {
+            font-size: 20px;
+            margin-bottom: 40px;
+            text-align: center;
+            color: white;
+            margin-bottom: -20px;
+        }
+        .acerca{
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 40px;
+            box-shadow: 0px 0px 15px rgba(0,0,0,0.5);
+            border-radius: 20px;
+        }
+        .caja-acerca{
+            background-color: #4440b4;
+            padding: 20px;
+            width: 350px;
+            border-radius: 20px;
+            text-align: left;
+        }
+        .contenido-acerca{
+            font-size: 20px;
+            background-color: #8a47be;
+            padding: 3px 8px;
+            border-radius: 8px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        .sobre{
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            gap: 40px;
+            flex-wrap: wrap;
+            color: whitesmoke;
+        }
+        .programador{
+            background-color: #8a47be;
+            padding: 20px;
+            border-radius: 20px;
+            font-size: 14px; /* tamaño de texto dentro de los recuadros */
+            color: #ddd;
+        }
+        .cajitas{
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 15px;
         }
     </style>
 </head>
@@ -174,6 +229,49 @@
             </div>
         </div>
     </main>
+
+    <!-- De aquí para abajo está todo lo que son las tablitas de acerca de la página y demás-->
+
+    <h2>Bienvenido a “…” . Conoce a nuestro equipo y aprende las reglas antes de jugar.</h2>
+
+    <div class="sobre">
+
+        <!--Aquí ira el acerca de :sob: -->
+        <div class="acerca">
+            <div class="caja-acerca">
+                <div class="contenido-acerca"> Acerca de </div>
+                <h3>¿Qué es? "..." </h3>
+                <p>Es un proyecto académico que simula un casino online...</p>
+            </div>
+        </div>
+
+        <!--Aquí estarán los "trabajadores" (ojalá :broken_heart:) -->
+        <div class="acerca">
+            <div class="caja-acerca">
+                <div class="contenido-acerca"> Equipo </div>
+                <h3> Desarrolladores </h3>
+                    <div class="cajitas">
+                        <div class="programador">Programador 1
+                            <p>Hola</p>
+                        </div>
+                        <div class="programador">Programador 2
+                            <p>Hola</p>
+                        </div>
+                        <div class="programador">Programador 3
+                            <p>Hola</p>
+                        </div>
+                        <div class="programador">Programador 4
+                            <p>Hola</p>
+                        </div>
+                        <div class="programador" style="grid-column: span 2;">Programador 5
+                            <p>Hola</p>
+                        </div>
+                 </div>      
+            </div>
+        </div>
+    </div>
+    
+
     <!-- Footer con Script -->
     <footer class="text-center" id="menuFooter"></footer>
 
