@@ -33,23 +33,26 @@ getMenu('menuPrincipal')
                         <h1 class="modal-title fs-5" id="exampleModalLabel">Resgistro de Usuario</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
+                    <!--<form action="accioncrearcuenta.html" method="POST">-->
+                    <div>
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-12">
                                  <div class="form-floating mb-3">
                                 <div class="form-floating">
-                                <input type="username" class="form-control" id="floatingPassword" placeholder="username">
+                                <input type="username" class="form-control" id="username" placeholder="username">
                                 <label for="floatingPassword">Nombre de Usuario</label>
                                 </div>
-                                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                                <div class="form-floating mb-3">
+                                <input type="email" class="form-control" id="email" placeholder="name@example.com">
                                 <label for="floatingInput">Correo Electronico</label>
                                 </div>
                                 <div class="form-floating">
-                                <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                                <input type="password" class="form-control" id="password" placeholder="Password">
                                 <label for="floatingPassword">Contraseña</label>
                                 </div>
                                 <div class="form-floating">
-                                <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                                <input type="password" class="form-control" id="password" placeholder="Password2">
                                 <label for="floatingPassword">Repita Contraseña</label>
                                 </div>
                             </div>
@@ -57,9 +60,11 @@ getMenu('menuPrincipal')
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary" onclick="">Crear Cuenta</button>
+                        <button type="submit" class="btn btn-primary" onclick="validarLogin(this)">Crear Cuenta</button>
                     </div>
                     </div>
+                    </div>
+                    <!--</form>-->
                 </div>
                 </div>       
                     </button>
