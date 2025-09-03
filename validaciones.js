@@ -1,3 +1,4 @@
+getModalLogin();
 function validarLogin(_btn) {
     _btn.classList.add('disabled');
     _btn.innerText = 'Validando...';
