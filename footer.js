@@ -5,9 +5,8 @@ getFooter('menuFooter')
         <div class="container d-flex flex-column flex-md-row align-items-center justify-content-between gap-3">
       <div><strong>Casino de los K</strong> · Proyecto académico — UDP</div>
       <div class="d-flex gap-3">
-        <a class="link-light" href="perfil.html">Perfil</a>
+        <a class="link-light" href="DatosPersonales.html">Perfil</a>
         <a class="link-light" href="billetera.html">Billetera</a>
-        <a class="link-light" href="mesa.html">Mesa</a>
       </div>
     </div>
     </footer>`
