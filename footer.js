@@ -1,7 +1,7 @@
 getFooter('menuFooter')
     function getFooter(_id){
         const elemento = document.getElementById(_id);
-        elemento.innerHTML = `<footer class="text-center" id="menuFooter">
+        elemento.innerHTML = `<footer class="text-center pie-pagina">
         <div class="container">
             <p class="mb-0">© 2023 MiSitioWeb. Todos los derechos reservados.</p>
             <div class="mt-2">
