@@ -27,7 +27,7 @@ getMenu('menuPrincipal')
                                 <h1 class="modal-title fs-5" id="exampleModalLabel">Iniciar sesion </h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <!--<form action="accioncrearcuenta.html" method="POST">-->
+                            <form action="index.html" method="POST">
                             <div>
                             <div class="modal-body">
                                 <div class="row">
@@ -50,7 +50,7 @@ getMenu('menuPrincipal')
                             </div>
                             </div>
                             </div>
-                            <!--</form>-->
+                            </form>
                         </div>
                         </div>   
                         </div>   
@@ -68,7 +68,7 @@ getMenu('menuPrincipal')
                         <h1 class="modal-title fs-5" id="exampleModalLabel">registrarse</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <!--<form action="accioncrearcuenta.html" method="POST">-->
+                    <form action="index" method="POST">
                     
                     <div class="modal-body">
                         <div class="row">
@@ -98,7 +98,7 @@ getMenu('menuPrincipal')
                         <button type="submit" class="btn btn-primary" onclick="validarLogin(this)">Crear Cuenta</button>
                     </div>
                     </div>
-                    <!--</form>-->
+                    </form>
                 </div>
                 </div>       
                    
