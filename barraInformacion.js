@@ -11,7 +11,7 @@ getMenu('barraInfo')
                     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                         <!-- La parte que se despliega del menu -->
                         <div class="navbar-nav nav-links-custom"> <!-- Ajusta los links en la barra -->
-                            <a class="nav-link active" aria-current="page" href="DatosPersonales.html">Datos personales</a>
+                            <a class="nav-link" href="DatosPersonales.html">Datos personales</a>
                             <a class="nav-link" href="Contacto.html">Contacto</a>
                             <a class="nav-link" href="Seguridad.html">Seguridad</a>
                             <a class="nav-link" href="Billetera.html">Billetera virtual</a>
