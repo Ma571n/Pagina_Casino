@@ -20,7 +20,7 @@ getMenu('menuPrincipal')
                         Iniciar Sesión
                     </button>
                     <!-- Modal -->
-                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="false">
                         <div class="modal-dialog">
                             <div class="modal-content">
                             <div class="modal-header">
@@ -61,7 +61,7 @@ getMenu('menuPrincipal')
             </button>
 
                 <!-- Modal -->
-                <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="false">
                 <div class="modal-dialog">
                     <div class="modal-content">
                     <div class="modal-header">
