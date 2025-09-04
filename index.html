@@ -2,390 +2,332 @@
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Casino</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-    <style>
-        body {
-            background: #312e81;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Casino</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+  <style>
+    body {
+      background: #312e81;
+    }
 
-        .custom-navbar {
-            background-color: #4c2ca3;
-        }
-        /**/
-        .navbar-brand {
-            font-weight: 600;
-            color: #ffffff;
-        }
+    html {
+      scroll-behavior: smooth;
+    }
 
+    .custom-navbar {
+      background-color: #4c2ca3;
+    }
 
-        /* Carrusel de las imagenes, está principalmente centrado */
+    .navbar-brand {
+      font-weight: 600;
+      color: #ffffff;
+    }
 
-        .carousel-container {
-            margin-top: 20px;
-            overflow: hidden;
-            max-width: 1200px;
-            display: flex;
-            justify-content: center;
-            padding: 0px;
-            width: 100%;
-        }
+    /* Carrusel */
+    .carousel-container {
+      margin-top: 20px;
+      overflow: hidden;
+      max-width: 1200px;
+      display: flex;
+      justify-content: center;
+      padding: 0px;
+      width: 100%;
+    }
 
+    .carousel-caption {
+      background: rgba(142, 142, 142, 0.385);
+      width: 100%;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 20px;
+      border-radius: 0 0 20px 20px;
+    }
 
-        /*Texto ubicado bajo el carrusel, lo más parecido a canvas */
-        .carousel-caption {
-            background: rgba(142, 142, 142, 0.385);
-            width: 100%;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            padding: 20px;
-            border-radius: 0 0 20px 20px;
-        }
+    .btn-iniciar-sesion {
+      background: #3a2b8f;
+      color: #ffffff;
+      border: none;
+    }
 
-        .btn-outline-success {
-            border-width: 2px;
-        }
+    .content {
+      padding: 2rem 0;
+    }
 
-        .btn-outline-secondary {
-            border-width: 2px;
-        }
+    .footer {
+      background: #4c2ca3;
+      color: #dcd6ff;
+      padding: 28px 0 110px;
+      border-top: 1px solid rgba(255, 255, 255, .08);
+      margin-top: 3rem;
+    }
 
-        .btn-iniciar-sesion {
-            background: #3a2b8f;
-            color: #ffffff;
-            border: none;
-        }
+    .barra-reglas {
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      background: #4c2ca3;
+      margin: 20px auto;
+      max-width: 550px;
+      position: fixed;
+      bottom: -13px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1020;
+      width: 70%;
+    }
 
-        .content {
-            padding: 2rem 0;
-        }
+    .barra-reglas .btn-primary {
+      background-color: #6649b8;
+      border: none;
+      font-weight: bold;
+    }
 
-        .footer {
-            background: #4c2ca3;
-            color: #dcd6ff;
-            padding: 28px 0 110px;
-            border-top: 1px solid rgba(255, 255, 255, .08);
-            margin-top: 3rem;
-        }
+    h2 {
+      font-size: 20px;
+      text-align: center;
+      color: white;
+      margin-bottom: -20px;
+    }
 
-        .modal {
-            margin-top: 100%;
-        }
+    .acerca {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 40px;
+      box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
+      border-radius: 20px;
+    }
 
-        .barra-reglas {
+    .caja-acerca {
+      background-color: #4440b4;
+      padding: 20px;
+      width: 732px;
+      border-radius: 20px;
+      text-align: left;
+    }
 
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            background: #4c2ca3;
-            padding: -29px;
-            margin: 20px auto;
-            max-width: 550px;
-        }
+    .contenido-acerca {
+      font-size: 20px;
+      background-color: #8a47be;
+      padding: 3px 8px;
+      border-radius: 8px;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
 
-        .barra-reglas .btn-primary {
-            background-color: #6649b8;
-            border: none;
-            font-weight: bold;
-        }
+    .sobre {
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      gap: 40px;
+      flex-wrap: wrap;
+      color: whitesmoke;
+    }
 
-        .barra-reglas {
-            position: fixed;
-            bottom: -13px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1020;
-            width: 70%;
-        }
+    .programador {
+      background-color: #8a47be;
+      padding: 20px;
+      border-radius: 20px;
+      font-size: 16px;
+      color: #ddd;
+    }
 
-        .bg-secondary {
-            border-radius: 200px;
-            max-width: 1050px;
-            margin-left: 125px;
-            padding: -10px;
-            margin-bottom: 35px;
-        }
+    .cajitas {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-top: 15px;
+    }
 
-        /* De aquí para abajo es lo que son las cajitas del Acerca de: y los "programadores que trabajan" */
-        /* Ocupe h2 para modificar el texto que se ubica arriba de las cajitas*/
-        /* Intenté ser lo mas directo posible con los nombres de las cajitas :broken_heart: */
-        h2 {
-            font-size: 20px;
-            margin-bottom: 40px;
-            text-align: center;
-            color: white;
-            margin-bottom: -20px;
-        }
+    .ruleta-container {
+      background: #4440b4;
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 0 9px black;
+      max-width: 1500px;
+      margin: 20px auto;
+      color: #ffffff;
+      position: relative;
+    }
 
-        .acerca {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-top: 40px;
-            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
-            border-radius: 20px;
-        }
+    .reglas-label {
+      position: absolute;
+      background: #8a47be;
+      color: white;
+      padding: 5px 15px;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 18px;
+    }
 
-        .caja-acerca {
-            background-color: #4440b4;
-            padding: 20px;
-            width: 732px;
-            border-radius: 20px;
-            text-align: left;
-        }
+    .ruleta-container h2 {
+      color: white;
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+      text-align: center;
+      font-size: 24px;
+    }
 
-        .contenido-acerca {
-            font-size: 20px;
-            background-color: #8a47be;
-            padding: 3px 8px;
-            border-radius: 8px;
-            display: inline-block;
-            margin-bottom: 10px;
-        }
+    .ruleta-container ul li {
+      color: #ffffff;
+      padding: 8px 0;
+      padding-left: 25px;
+      font-size: 16px;
+    }
 
-        .sobre {
-            display: flex;
-            justify-content: center;
-            align-items: stretch;
-            gap: 40px;
-            flex-wrap: wrap;
-            color: whitesmoke;
-        }
-
-        .programador {
-            background-color: #8a47be;
-            padding: 20px;
-            border-radius: 20px;
-            font-size: 16px;
-            /* tamaño de texto dentro de los recuadros */
-            color: #ddd;
-        }
-
-        .cajitas {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .ruleta-container {
-            background: #4440b4;
-            border: 0, 5px solid black;
-            border-radius: 15px;
-            /* Bordes más redondeados */
-            padding: 25px;
-            box-shadow: 0 0 9px black;
-            max-width: 1500px;
-            margin: 20px auto;
-            color: #ffffff;
-            position: relative;
-
-        }
-
-        .reglas-label {
-            position: absolute;
-
-            background: #8a47be;
-            color: white;
-            padding: 5px 15px;
-            border-radius: 10px;
-            /* Bordes redondeados */
-            font-weight: bold;
-            font-size: 18px;
-
-        }
-
-        .ruleta-container h2 {
-            color: white;
-            padding-bottom: 10px;
-            margin-bottom: 15px;
-            text-align: center;
-            font-size: 24px;
-            ;
-        }
-
-        .ruleta-container ul li {
-            color: #ffffff;
-            padding: 8px 0;
-            position: relative;
-            padding-left: 25px;
-            font-size: 16px;
-        }
-        .pie-pagina{
-            background-color: #4c2ca3;
-            color:#dcd6ff; 
-            padding:28px 0 110px; 
-            border-top:1px solid rgba(255,255,255,.08); 
-            margin-top:3rem;
-        }
-    </style>
+    .pie-pagina {
+      background-color: #4c2ca3;
+      color: #dcd6ff;
+      padding: 28px 0 110px;
+      border-top: 1px solid rgba(255, 255, 255, .08);
+      margin-top: 3rem;
+    }
+  </style>
 </head>
 
 <body>
-    <!-- Navbar con menu Script -->
-    <header id="menuPrincipal"></header>
+  <!-- Navbar con menu Script -->
+  <header id="menuPrincipal"></header>
 
-    <main>
-        <!-- Modal -->
-
-        <!-- Contenedor del carrusel -->
-        <section class="carousel-container container">
-            <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-indicators">
-                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
-                        aria-current="true" aria-label="Slide 1"></button>
-                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
-                        aria-label="Slide 2"></button>
-                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
-                        aria-label="Slide 3"></button>
-                </div>
-                <div class="carousel-inner rounded-5">
-                    <div class="carousel-item active">
-                        <img src="https://www.bwin.es/es/games/blog/cdn/img/SP2ObadXlMNZoKK5wsXV8CGJTAOiZ4AOkBRMaxP2.jpg?w=900&h=471&fm=jpeg&q=80"
-                            class="d-block w-100" alt="Imagen 1" style="height: 600px; object-fit: cover;">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5>Casino</h5>
-                            <p>Casino Cosa 1.</p>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0kZDvhTaV1PrO7HKwnO9YYx9Klw7aKqNDjw&s"
-                            class="d-block w-100" alt="Imagen 2" style="height: 600px; object-fit: cover;">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5>Casino 2</h5>
-                            <p>Casino cosa 2.</p>
-                            <p>Casino cosa 2.</p>
-                            <p>Casino cosa 2.</p>
-                            <p>Casino cosa 2.</p>
-                            <p>Casino cosa 2.</p>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <img src="https://www.futbolred.com/files/article_main/uploads/2024/01/30/65b9871eb31e9.jpeg"
-                            class="d-block w-100" alt="Imagen 3" style="height: 600px; object-fit: cover;">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5>Casino 3</h5>
-                            <p>Casino cosa 3.</p>
-                        </div>
-                    </div>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
-                    data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Anterior</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
-                    data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Siguiente</span>
-                </button>
-            </div>
-        </section>
-
-        <!-- Barra de reglas -->
-        <section>
-            <div class="barra-reglas container rounded-3">
-                <div class="barra-reglas-menor row text-center p-4">
-                    <div class="col-4">
-                        <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal"
-                            data-bs-target="#staticBackdropREGLAS">
-                            Inicio
-                        </button>
-                    </div>
-                    <div class="col-4">
-                        <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal"
-                            data-bs-target="#staticBackdropREGLAS">
-                            Acerca de
-                        </button>
-                    </div>
-                    <div class="col-4">
-                        <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal"
-                            data-bs-target="#staticBackdropREGLAS">
-                            Reglas
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-
-
-        <!-- De aquí para abajo está todo lo que son las tablitas de acerca de la página y demás-->
-
-        <h2>Bienvenido a “…” . Conoce a nuestro equipo y aprende las reglas antes de jugar.</h2>
-
-        <div class="sobre">
-
-            <!--Aquí ira el acerca de :sob: -->
-            <div class="acerca">
-                <div class="caja-acerca">
-                    <div class="contenido-acerca"> Acerca de </div>
-                    <h3>¿Qué es?</h3>
-                    <p>Es un proyecto académico que simula un casino online.</p>
-                    <p>El proyecto esta centrado para desarrollar nuestras habilidades tanto en desarrollo de una pagina
-                        como el manejo de un proyecto en equipo donde necesitamos habilidades para crear la pagina y
-                        tener
-                        un manejo de tareas</p>
-                </div>
-            </div>
-
-            <!--Aquí estarán los "trabajadores" (ojalá :broken_heart:) -->
-            <div class="acerca">
-                <div class="caja-acerca">
-                    <div class="contenido-acerca"> Equipo </div>
-                    <h3> Desarrolladores </h3>
-                    <div class="cajitas">
-                        <div class="programador">
-                            <p><strong>Martín Mondaca</strong> | Programador Principal</p>
-                        </div>
-                        <div class="programador">
-                            <p><strong>Matías Neira</strong> | Programador Principal</p>
-                        </div>
-                        <div class="programador">
-                            <p><strong>David Fuentes</strong> | Programador Principal</p>
-                        </div>
-                        <div class="programador">
-                            <p><strong>Nicolás González</strong> | Programador Secundario | Diseñador</p>
-                        </div>
-                        <div class="programador">
-                            <p><strong>Paulette Saavedra</strong> | Programador Secundario | Diseñador</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  <main>
+    <!-- Carrusel -->
+    <section id="inicio" class="carousel-container container">
+      <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
+            aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
+            aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
+            aria-label="Slide 3"></button>
         </div>
-        <!--Aqui van las reglas de la ruleta -->
-        <div class="ruleta-container">
-            <div class="reglas-label">Reglas</div>
-            <h2>La Ruleta</h2>
-            <p>La ruleta, o ruleta de casino, es un juego simple que consiste en una rueda con casillas enumeradas del 0
-                al 36. La mitad de los números (1-36) son negros y la otra mitad son rojos, mientras que el 0 es verde.
-                El jugador apuesta a dónde cree que caerá una pequeña bola. Para este proyecto en particular, las
-                apuestas funcionan así:</p>
-            <ul>
-                <li><strong>Rojo o Negro:</strong> Si se apuesta a uno de estos colores y la bola cae en un número de
-                    ese color, el jugador gana el doble de lo apostado (1:1).</li>
-                <li><strong>Par o Impar:</strong> Si se apuesta a los números pares o impares y la bola cae en un número
-                    que cumple esa condición, el jugador gana el doble de lo apostado (1:1).</li>
-                <li><strong>Número Único:</strong> Si el jugador apuesta a un solo número (del 0 al 36) y la bola cae en
-                    ese número, ¡la ganancia es mucho mayor! Se paga 35 veces lo apostado (35:1)</li>
-                <li><strong>Verde:</strong> Si la bola cae en el 0 (verde), todas las apuestas a rojo, negro, par o
-                    impar se pierden</li>
-            </ul>
+        <div class="carousel-inner rounded-5">
+          <div class="carousel-item active">
+            <img src="https://www.bwin.es/es/games/blog/cdn/img/SP2ObadXlMNZoKK5wsXV8CGJTAOiZ4AOkBRMaxP2.jpg?w=900&h=471&fm=jpeg&q=80"
+              class="d-block w-100" alt="Imagen 1" style="height: 600px; object-fit: cover;">
+            <div class="carousel-caption d-none d-md-block">
+              <h5>Ruleta Americana</h5>
+              <p>¿A qué número caerá la bola?</p>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0kZDvhTaV1PrO7HKwnO9YYx9Klw7aKqNDjw&s"
+              class="d-block w-100" alt="Imagen 2" style="height: 600px; object-fit: cover;">
+            <div class="carousel-caption d-none d-md-block">
+              <h5>Ruleta Americana</h5>
+              <p>Haz tu apuesta y gira la rueda.</p>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img src="https://www.futbolred.com/files/article_main/uploads/2024/01/30/65b9871eb31e9.jpeg"
+              class="d-block w-100" alt="Imagen 3" style="height: 600px; object-fit: cover;">
+            <div class="carousel-caption d-none d-md-block">
+              <h5>Ruleta Americana</h5>
+              <p>El clásico juego de azar del casino.</p>
+            </div>
+          </div>
         </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+          data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+          data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Siguiente</span>
+        </button>
+      </div>
+    </section>
 
-        <!-- Footer con Script -->
-        <footer class="text-center" id="menuFooter"></footer>
+    <!-- Barra de menú -->
+    <section>
+      <div class="barra-reglas container rounded-3">
+        <div class="barra-reglas-menor row text-center p-4">
+          <div class="col-4">
+            <a href="#inicio" class="btn btn-primary w-100">Inicio</a>
+          </div>
+          <div class="col-4">
+            <a href="#acerca" class="btn btn-primary w-100">Acerca de</a>
+          </div>
+          <div class="col-4">
+            <a href="#reglas" class="btn btn-primary w-100">Reglas</a>
+          </div>
+        </div>
+      </div>
+    </section>
 
-        <!-- Scripts-->
-        <script src="menu.js"></script>
-        <script src="footer.js"></script>
-        <script src="validaciones.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    </main>
+    <h2>Bienvenido a “…” . Conoce a nuestro equipo y aprende las reglas antes de jugar.</h2>
+
+    <div id="acerca" class="sobre">
+      <!-- Acerca de -->
+      <div class="acerca">
+        <div class="caja-acerca">
+          <div class="contenido-acerca"> Acerca de </div>
+          <h3>¿Qué es?</h3>
+          <p>Es un proyecto académico que simula un casino online.</p>
+          <p>El proyecto está centrado en desarrollar nuestras habilidades tanto en desarrollo de una página
+            como el manejo de un proyecto en equipo donde necesitamos habilidades para crear la página y
+            tener un manejo de tareas.</p>
+        </div>
+      </div>
+
+      <!-- Equipo -->
+      <div class="acerca">
+        <div class="caja-acerca">
+          <div class="contenido-acerca"> Equipo </div>
+          <h3> Desarrolladores </h3>
+          <div class="cajitas">
+            <div class="programador">
+              <p><strong>Martín Mondaca</strong> | Programador Principal</p>
+            </div>
+            <div class="programador">
+              <p><strong>Matías Neira</strong> | Programador Principal</p>
+            </div>
+            <div class="programador">
+              <p><strong>David Fuentes</strong> | Programador Principal</p>
+            </div>
+            <div class="programador">
+              <p><strong>Nicolás González</strong> | Programador Secundario | Diseñador</p>
+            </div>
+            <div class="programador">
+              <p><strong>Paulette Saavedra</strong> | Programador Secundario | Diseñador</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reglas -->
+    <div id="reglas" class="ruleta-container">
+      <div class="reglas-label">Reglas</div>
+      <h2>La Ruleta</h2>
+      <p>La ruleta, o ruleta de casino, es un juego simple que consiste en una rueda con casillas enumeradas del 0
+        al 36. La mitad de los números (1-36) son negros y la otra mitad son rojos, mientras que el 0 es verde.
+        El jugador apuesta a dónde cree que caerá una pequeña bola. Para este proyecto en particular, las
+        apuestas funcionan así:</p>
+      <ul>
+        <li><strong>Rojo o Negro:</strong> Si se apuesta a uno de estos colores y la bola cae en un número de
+          ese color, el jugador gana el doble de lo apostado (1:1).</li>
+        <li><strong>Par o Impar:</strong> Si se apuesta a los números pares o impares y la bola cae en un número
+          que cumple esa condición, el jugador gana el doble de lo apostado (1:1).</li>
+        <li><strong>Número Único:</strong> Si el jugador apuesta a un solo número (del 0 al 36) y la bola cae en
+          ese número, ¡la ganancia es mucho mayor! Se paga 35 veces lo apostado (35:1)</li>
+        <li><strong>Verde:</strong> Si la bola cae en el 0 (verde), todas las apuestas a rojo, negro, par o
+          impar se pierden</li>
+      </ul>
+    </div>
+
+    <!-- Footer con Script -->
+    <footer class="text-center" id="menuFooter"></footer>
+  </main>
+
+  <!-- Scripts -->
+  <script src="menu.js"></script>
+  <script src="footer.js"></script>
+  <script src="validaciones.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>
