@@ -16,7 +16,7 @@ getMenu('menuPrincipal')
             <div class="collapse navbar-collapse" id="navbarContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0"> </ul>
                 <div class="d-flex">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <button type="button" class="btn btn-iniciar-sesion" data-bs-toggle="modal" data-bs-target="#exampleModal">
                         Iniciar Sesión
                     </button>
                     <!-- Modal -->
