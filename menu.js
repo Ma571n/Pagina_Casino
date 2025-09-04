@@ -20,45 +20,61 @@ getMenu('menuPrincipal')
                         Iniciar Sesión
                     </button>
                     <!-- Modal -->
-                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="false">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">Iniciar sesion </h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <form action="index.html" method="POST">
-                            <div>
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="form-floating mb-3">
-                                        <div class="form-floating mb-3">
-                                        <input type="email" class="form-control" id="email" placeholder="name@example.com">
-                                        <label for="floatingInput">Correo Electronico</label>
-                                        </div>
-                                        <div class="form-floating mb-3">
-                                        <input type="password" class="form-control" id="password" placeholder="Password">
-                                        <label for="floatingPassword">Contraseña</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn btn-primary" onclick="validarLogin(this)">Iniciar Sesion</button>
-                            </div>
-                            </div>
-                            </div>
-                            </form>
-                        </div>
-                        </div>   
-                        </div>   
+                       <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="false">
+            <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+            <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Iniciar sesión</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+      
+      <div class="modal-body">
+        <div class="row">
+          <!-- Imagen -->
+          <div class="col-md-6 d-flex align-items-center justify-content-center">
+            <img src="https://i.pinimg.com/736x/d2/d7/60/d2d760ac5984ab443b8fe97a70cf54de.jpg" alt="Imagen de ejemplo" class="img-fluid rounded">
+          </div>
 
-                                    <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2">
-            Registrarse
-            </button>
+          <!-- Formulario -->
+          <div class="col-md-6">
+            <form>
+              <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="email" placeholder="name@example.com" required>
+                <label for="email">Correo Electrónico</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="password" class="form-control" id="password" placeholder="Contraseña" required>
+                <label for="password">Contraseña</label>
+              </div>
+
+              <!-- Opciones Formulario -->
+              <div class="d-grid gap-2 mb-3">
+              <button type="submit" class="btn btn-primary" onclick="validarLogin(event)">
+                  Iniciar Sesión
+                </button>  
+              <button type="button" class="btn btn-link p-0 text-start" style="text-decoration: none;" onclick="alert('Redirigir a registro')">
+                  ¿No posees una cuenta? Regístrate aquí
+                </button>
+                <button type="button" class="btn btn-link p-0 text-start" style="text-decoration: none;" onclick="alert('Redirigir a recuperar contraseña')">
+                  ¿Olvidó su contraseña? Recuperar contraseña
+                </button>
+              </div>
+
+              <!-- Botón cerrar alineado a la derecha -->
+              <div class="text-end mt-2">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                            Registrarse
+                    </button>
 
                 <!-- Modal -->
                 <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="false">
