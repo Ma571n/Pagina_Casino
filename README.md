@@ -5,5 +5,5 @@ Integrantes:
     -David Fuentes
     -Paulette Saavedra
     -Matias Neira
-    -Nicolas Gonzales
+    -Nicolas González
     -Martin Mondaca
