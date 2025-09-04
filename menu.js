@@ -1,7 +1,7 @@
 getMenu('menuPrincipal')
     function getMenu(_id){
         const elemento = document.getElementById(_id);
-        elemento.innerHTML = `<nav class="navbar navbar-expand-lg bg-body-tertiary">
+        elemento.innerHTML = `<nav class="navbar navbar-expand-lg custom-navbar">
         <div class="container">
             <a class="navbar-brand" href="index.html">
                 <img src="https://i.pinimg.com/736x/40/9c/2f/409c2f2f42c7c3589b5e5cddedba30c2.jpg" alt="Logo" width="30"
