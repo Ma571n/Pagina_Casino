@@ -1,202 +1,144 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil|Usuario</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-    <style>
-        body {
-            background: #312e81;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Perfil | Billetera</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+  <style>
+    :root{
+      /* Ajusta si tu navbar es más alta/baja */
+      --nav-h: 44px;
+      --page-bg: #ffffff;
+      --panel-bg: #f4f5f8;
+    }
 
-        .custom-navbar {
-            background-color: #5b3fa3;
-        }
+    /* Página blanca completa, sin márgenes */
+    html, body { height: 100%; margin: 0; }
+    body {
+      display: flex; flex-direction: column; min-height: 100vh;
+      background: var(--page-bg);
+      color: #1f1f1f;
+    }
 
-        .navbar-brand {
-            color: white;
+    /* El contenido empieza justo debajo de la navbar fija */
+    main {
+      flex: 1;
+      padding-top: calc(var(--nav-h) + 8px); /* separa levemente la navbar del body */
+    }
+
+    /* Sombra bajo la navbar (la clase viene desde menu.js) */
+    .custom-navbar {
+      background: #4c2ca3;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    }
+    .navbar-brand {
             font-weight: 600;
+            color: #ffffff;
         }
 
-        .footer {
-            background: #4c2ca3;
-            color: #dcd6ff;
-            padding: 28px 0 110px;
-            border-top: 1px solid rgba(255, 255, 255, .08);
-            margin-top: 3rem;
-        }
+    /* Bloques a todo el ancho, sin márgenes laterales */
+    .full-bleed { width: 100%; margin: 0; padding: 0; }
 
-        .barra-principal {
-            padding: 56px;
-        }
+    /* Tarjeta del formulario: ocupa ancho cómodo; sin márgenes externos del body */
+    .card-perfil{
+      max-width: 1890px;
+      margin: 16px auto 0;
+      background: #ffffff;
+      border: 2px solid #b388ff;
+      border-radius: 22px;
+      padding: 38px;
+      box-shadow: 0 10px 24px rgba(0,0,0,.12);
+    }
 
-        .nav-links-custom .nav-link {
-            padding: 0.5rem 1rem;
-            /* espacio uniforme arriba/abajo y a los lados */
-            margin-right: 0.5rem;
-            /* separación entre enlaces */
-            border-radius: 0.5rem;
-            /* bordes redondeados en cada link */
-            transition: background-color 0.2s ease;
-        }
+    /* Grid 2 columnas (responsive) */
+    .form-grid{
+      display: grid; gap: 20px;
+      grid-template-columns: 1fr 1fr;
+    }
+    @media (max-width: 992px){
+      .form-grid{ grid-template-columns: 1fr; }
+    }
 
-        /* Hover para dar mejor efecto */
-        .nav-links-custom .nav-link:hover {
-            background-color: rgba(0, 0, 0, 0.05);
-        }
+    /* Etiquetas y campos */
+    .form-label{
+      font-weight: 700; color:#222; margin-bottom: 6px;
+    }
+    .input-rounded{
+      background:#eef1f3; border:1px solid #e0e3e7;
+      border-radius: 18px; padding: 14px 16px; height: 48px;
+    }
+    .input-rounded::placeholder{ color:#9aa0a6; }
 
-        .datos-centrales {
-            margin-top: 10px;
-        }
+    /* Campo fecha con icono */
+    .input-group .input-group-text{
+      background:#eef1f3; border:1px solid #e0e3e7; border-left: none;
+      border-radius: 0 18px 18px 0;
+    }
+    .input-group .input-rounded{
+      border-right: none; border-radius: 18px 0 0 18px;
+    }
 
-        .informacion-billetera {
-            background-color: #f8f9fa;
-            margin-top: 20px;
-            padding: 20px;
-            border-radius: 20px;
-        }
+    /* Botón */
+    .btn-guardar{
+      background:#4c7bf7; border:none; font-weight:800;
+      padding: 12px 22px; border-radius: 14px;
+    }
+    .btn-guardar:hover{ filter: brightness(.95); }
 
-        .contenido {
-            background-color: #8a47be;
-            margin-bottom: 15px;
-            padding: 15px;
-            border-radius: 10px;
-        }
-
-        .contenido.col {
-            margin-bottom: 10px;
-        }
-
-        button.btn {
-            display: block;
-            margin: 0 auto;
-        }
-
-        form {
-            color: white;
-            /* afecta a labels y texto */
-        }
-
-        form input,
-        form textarea,
-        form select {
-            color: white;
-            background-color: #5b3fa3;
-        }
-
-        form input::placeholder {
-            color: #f8f9fa;
-        }
-
-        .table th,
-        .table td{
-            background-color: #f8f9fa; 
-            border: none;
-        }
-
-        .table tbody tr {
-            border-top: 1px solid black;
-            border-bottom: 1px solid black;
-        }
-
-        .btn {
-            border-radius: 10px;
-            padding: 10px 20px;
-            font-weight: 600;
-            border: 1px solid black;
-        }
-
-        .saldo-actual {
-            background-color: #312e81; 
-            color: white;
-            border-radius: 20px;
-            padding: 15px;
-        }
-
-        .botones-billetera .btn {
-            border-radius: 8px;
-            font-weight: bold;
-            margin-right: 8px;
-        }
-
-        .pie-pagina{
-            background-color: #4c2ca3;
-            color:#dcd6ff; 
-            padding:28px 0 110px; 
-            border-top:1px solid rgba(255,255,255,.08); 
-            margin-top:3rem;
-        }
-
-        .pie-pagina{
-            background-color: #4c2ca3;
-            color:#dcd6ff; 
-            padding:28px 0 110px; 
-            border-top:1px solid rgba(255,255,255,.08); 
-            margin-top:3rem;
-        }
-    </style>
+    /* Footer morado como en la home */
+    .pie-pagina{
+      background-color:#4c2ca3; color:#dcd6ff;
+      padding:28px 0 110px; border-top:1px solid rgba(255,255,255,.08);
+      margin-top:3rem;
+    }
+  </style>
 </head>
 
-<body>
-    <header id="menuPrincipal"></header>
-    <main>
-        <!-- barra de navegacion  -->
-        <section id="barraInfo" class="barra-principal"></section>
+</head>
+<header id="menuPrincipal"></header>
 
-       <section class="informacion-billetera col-md-8 mx-auto">
-        <!-- Botones y saldo -->
-        <div class="d-flex justify-content-between align-items-center mb-3">
-        <div class="d-flex gap-2">
-            <button class="btn btn-light">Histórico de transacciones</button>
-            <button class="btn btn-light">Cargar dinero</button>
-            <button class="btn btn-light">Retirar dinero</button>
+  <main>
+    <!-- Tabs -->
+    <section class="tabs-wrap full-bleed">
+      <section id="barraInfo" class="barra-principal"></section>
+    </section>
+
+    
+    <!-- barrita de billetera -->
+    <section class="wallet-bar container-fluid">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div class="d-flex align-items-center flex-wrap">
+          <a href="Billetera.html" class="nav-link active">Histórico de transacciones</a>
+          <a href="Billetera-cargar.html" class="nav-link">Cargar dinero</a>
+          <a href="Billetera-retirar.html" class="nav-link">Retirar dinero</a>
         </div>
-            <div class="saldo-actual">Saldo actual $63.000</div>
-        </div>
+        <div class="saldo-chip" id="saldoChip">Saldo actual $63.000</div>
+      </div>
+    </section>
 
-        <section class="informacion-billetera container rounded-3">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Fecha </th>
-                        <th scope="col">Monto + </th>
-                        <th scope="col">Monto - </th>
-                        <th scope="col">Total </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">11/11/2025</th>
-                        <td>+ $52.0000 (Ruleta)</td>
-                        <td>—</td>
-                        <td>$63.000</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">15/04 /2025</th>
-                        <td>+ $5.000 (Webpay)</td>
-                        <td>—</td>
-                        <td>$11.000</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">11/11/2025</th>
-                        <td>—</td>
-                        <td>-$50.000</td>
-                        <td> $6.000</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-    </main>
-    <footer class="text-center" id="menuFooter"></footer>
-
-    <!-- Scripts -->
-    <script src="menu.js"></script>
-    <script src="footer.js"></script>
-    <script src="barraInformacion.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- contenido: histórico -->
+    <section class="card-perfil">
+      <div class="table-responsive">
+        <table class="wallet-table">
+          <thead>
+            <tr><th style="min-width:140px;">Fecha</th><th>Monto +</th><th>Monto -</th><th style="min-width:120px;">Total</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>11/11/2025</td><td>+ $52.000 (Ruleta)</td><td>—</td><td>$63.000</td></tr>
+            <tr><td>15/04/2025</td><td>+ $5.000 (Webpay)</td><td>—</td><td>$11.000</td></tr>
+            <tr><td>11/11/2025</td><td>—</td><td>-$50.000</td><td>$6.000</td></tr>
+            <tr><td>11/11/2021</td><td>+ $6.000 (Ruleta)</td><td>—</td><td>$56.000</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+  <div id="menuFooter"></div>
+  <script src="menu.js"></script>
+  <script src="footer.js"></script>
+  <script src="barraInformacion.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>
