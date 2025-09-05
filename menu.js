@@ -91,8 +91,16 @@ getMenu('menuPrincipal')
                             <div class="col-12">
                                  <div class="form-floating mb-3">
                                 <div class="form-floating mb-3">
+                                <input type="rut" class="form-control" id="rut" placeholder="rut">
+                                <label for="floatingPassword">Rut del Usuario</label>
+                                </div>
+                                <div class="form-floating mb-3">
                                 <input type="username" class="form-control" id="username" placeholder="username">
-                                <label for="floatingPassword">Nombre de Usuario</label>
+                                <label for="floatingPassword">Nombre completo</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                <input type="fecha" class="form-control" id="fecha" placeholder="fecha">
+                                <label for="floatingPassword">Fecha de nacimiento en formato (dd/mm/yyyy)</label>
                                 </div>
                                 <div class="form-floating mb-3">
                                 <input type="email" class="form-control" id="email" placeholder="name@example.com">
