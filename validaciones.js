@@ -7,8 +7,18 @@ function validarLogin(_btn) {
     const email = document.getElementById('email');
     const password = document.getElementById('password');
     const password2 = document.getElementById('password2');
+    const rut = document.getElementById('rut');
+    const fecha = document.getElementById('fecha');
      alert('Validando Login');
     let errores = 0;
+    if (rut.value == ''){
+        rut.classList.add('is-invalid')
+        errores++;
+    } else {
+        console.log(rut.value);
+        rut.classList.remove('is-invalid')
+        rut.classList.add('is-valid')
+    }
     if (username.value == ''){
         username.classList.add('is-invalid')
         errores++;
@@ -16,6 +26,14 @@ function validarLogin(_btn) {
         console.log(username.value);
         username.classList.remove('is-invalid')
         username.classList.add('is-valid')
+    }
+    if (fecha.value == ''){
+        fecha.classList.add('is-invalid')
+        errores++;
+    } else {
+        console.log(fecha.value);
+        fecha.classList.remove('is-invalid')
+        fecha.classList.add('is-valid')
     }
     if (email.value == '') {
         email.classList.add('is-invalid');
