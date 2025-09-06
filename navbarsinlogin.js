@@ -27,7 +27,7 @@ function getMenu(_id) {
                                     <div class="row">
                                         <!-- Imagen -->
                                         <div class="col-md-6 d-flex align-items-center justify-content-center">
-                                            <img src="https://i.pinimg.com/736x/d2/d7/60/d2d760ac5984ab443b8fe97a70cf54d2.jpg" alt="Imagen de ejemplo" class="img-fluid rounded">
+                                            <img src="https://preview.redd.it/random-pictures-of-tyler-the-creator-i-found-on-tiktok-v0-k75n1wuuihlb1.jpg?width=600&format=pjpg&auto=webp&s=d53a0268773fa3036f3e36b0eb81d3157406448e" alt="Imagen de ejemplo" class="img-fluid rounded">
                                         </div>
                                         <!-- Formulario -->
                                         <div class="col-md-6">
