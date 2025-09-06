@@ -87,7 +87,24 @@
 
         <section class="card-perfil">
             <h5 class="mb-3 fw-bold">Cargar dinero</h5>
-            <p>Pantalla de carga de saldo (placeholder para futura integración).</p>
+            <form class="row g-3">
+                <div class="col-12 col-md-6">
+                    <label class="form-label">Monto a Cargar</label>
+                    <input type="number" class="form-control" placeholder="$5.000">
+                </div>
+                <div class="col-12 col-md-6">
+                    <label class="form-label">Medio de Pago</label>
+                    <select class="form-select">
+                        <option>WebPay</option>
+                        <option>Tarjeta de Crédito/Débito</option>
+                        <option>Transferencia Bancaria</option>
+                    </select>
+                </div>
+                <div class="col-12">
+                    <button class="btn btn-success">CARGAR</button>
+                </div>
+            </form>
+
         </section>
         <div id="menuFooter"></div>
     </main>

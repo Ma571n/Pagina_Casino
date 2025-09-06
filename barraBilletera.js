@@ -16,7 +16,7 @@ function getWalletMenu(_id) {
             <a class="nav-link" href="CargarDinero.html" data-path="CargarDinero.html">Cargar dinero</a>
             <a class="nav-link" href="RetirarDinero.html" data-path="RetirarDinero.html">Retirar dinero</a>
           </div>
-          <span class="ms-auto fw-bold">Saldo actual $63.000</span>
+          <span class="ms-auto fw-bold">Saldo actual $20.000</span>
         </div>
       </div>
     </nav>
