@@ -11,13 +11,18 @@ function getMenuLogged(_id, userName) {
             </button>
             <div class="collapse navbar-collapse" id="navbarContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
-                <div class="d-flex">
+                <div class="d-flex align-items-center">
+                    <!-- Icono de usuario con menú desplegable -->
                     <div class="dropdown">
-                        <button class="btn btn-iniciar-sesion dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn btn-link text-light text-decoration-none dropdown-toggle d-flex align-items-center" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-circle me-2" style="font-size: 1.5rem;"></i>
                             ${userName}
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                            <li><a class="dropdown-item" href="#" onclick="cerrarSesion()">Cerrar Sesión</a></li>
+                            <li><a class="dropdown-item" href="DatosPersonales.html"><i class="bi bi-person me-2"></i>Perfil de Usuario</a></li>
+                            <li><a class="dropdown-item" href="billetera.html"><i class="bi bi-wallet2 me-2"></i>Billetera</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" onclick="cerrarSesion()"><i class="bi bi-box-arrow-right me-2"></i>Cerrar Sesión</a></li>
                         </ul>
                     </div>
                 </div>
@@ -32,6 +37,7 @@ function cerrarSesion() {
     localStorage.removeItem('nombreUsuario');
     // Actualizar el navbar a la versión sin login
     getMenu('menuPrincipal');
+    getFooter('menuFooter');
     // Recargar la página para asegurar que todos los componentes se actualicen
-    window.location.href = 'index.html';
+    window.location.reload();
 }
