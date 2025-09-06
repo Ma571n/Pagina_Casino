@@ -59,11 +59,13 @@ function verificarAutenticacion() {
     const nombreUsuario = localStorage.getItem('nombreUsuario');
 
     if (usuarioLogueado === 'true' && nombreUsuario) {
-        // Si está logueado, cargar el navbar con el nombre de usuario
+        // Si está logueado, cargar el navbar y footer con el nombre de usuario
         getMenuLogged('menuPrincipal', nombreUsuario);
+        getFooterLogged('menuFooter', nombreUsuario);
     } else {
-        // Si no está logueado, cargar el navbar normal
+        // Si no está logueado, cargar el navbar y footer normal
         getMenu('menuPrincipal');
+        getFooter('menuFooter');
     }
 }
 
