@@ -7,7 +7,7 @@ function getFooterLogged(_id, username) {
                 <div><strong>Casino de los K</strong> · Bienvenido, ${username}</div>
                 <div class="d-flex gap-3">
                     <a class="link-light" href="DatosPersonales.html">Perfil</a>
-                    <a class="link-light" href="billetera.html">Billetera</a>
+                    <a class="link-light" href="Billetera.html">Billetera</a>
                 </div>
             </div>
         </footer>
