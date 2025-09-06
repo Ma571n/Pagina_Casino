@@ -39,5 +39,5 @@ function cerrarSesion() {
     getMenu('menuPrincipal');
     getFooter('menuFooter');
     // Recargar la página para asegurar que todos los componentes se actualicen
-    window.location.reload();
+    window.location.href = 'index.html';
 }
