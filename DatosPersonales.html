@@ -58,7 +58,7 @@
             padding: 0;
         }
 
-        /* Tarjeta del formulario: ocupa ancho cómodo; sin márgenes externos del body */
+        /* Tarjeta del formulario */
         .card-perfil {
             max-width: 1890px;
             margin: 16px auto 0;
@@ -136,11 +136,11 @@
             margin-top: 3rem;
         }
 
+        /* Activo azul en barraInformacion (por si aún no lo tenías) */
         #barraInfo .nav-link.active {
-            background-color: #5534a1 !important;
-            /* azul */
+            background-color: #5534A4 !important;
             color: #fff !important;
-            border-color: #5534a1 !important;
+            border-color: #5534A4 !important;
             border-radius: 14px;
         }
     </style>
@@ -158,36 +158,37 @@
 
         <!-- Tarjeta con formulario en 2 columnas -->
         <section class="card-perfil">
-            <form>
+            <form id="formPerfil">
                 <div class="form-grid">
                     <!-- Columna izquierda -->
                     <div>
                         <label class="form-label" for="username">Username (RUT)</label>
-                        <input id="username" type="text" class="form-control input-rounded" placeholder="11.111.111-1"
-                            disabled>
+                        <input id="username" name="username" type="text" class="form-control input-rounded"
+                            placeholder="11.111.111-1" value="11.111.111-1">
 
                         <label class="form-label mt-3" for="fecha">Fecha de Nacimiento</label>
                         <div class="input-group">
-                            <input id="fecha" type="text" class="form-control input-rounded" placeholder="01-01-2002"
-                                disabled>
-                            <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                            <input id="fecha" name="fecha" type="date" class="form-control input-rounded"
+                                placeholder="01-01-2002" value="2002-01-01">
+                            </span>
                         </div>
+
                     </div>
 
                     <!-- Columna derecha -->
                     <div>
                         <label class="form-label" for="nombre">Nombre y Apellido</label>
-                        <input id="nombre" type="text" class="form-control input-rounded" placeholder="Nombre Apellido"
-                            disabled>
+                        <input id="nombre" name="nombre" type="text" class="form-control input-rounded"
+                            placeholder="Nombre Apellido" value="Nombre Apellido">
 
                         <label class="form-label mt-3" for="correo">Correo Electrónico</label>
-                        <input id="correo" type="email" class="form-control input-rounded"
-                            placeholder="correo@mail.udp.cl" disabled>
+                        <input id="correo" name="correo" type="email" class="form-control input-rounded"
+                            placeholder="correo@mail.udp.cl" value="correo@mail.udp.cl">
                     </div>
                 </div>
 
                 <div class="mt-4">
-                    <button type="button" class="btn btn-guardar">Guardar cambios</button>
+                    <button id="guardarPerfil" type="submit" class="btn btn-guardar">Guardar cambios</button>
                 </div>
             </form>
         </section>
@@ -200,6 +201,14 @@
     <script src="menu.js"></script>
     <script src="footer.js"></script>
     <script src="barraInformacion.js"></script>
+    <script>
+        // Simular guardado: redirige a la misma página (refresca)
+        document.getElementById('formPerfil').addEventListener('submit', function (e) {
+            e.preventDefault();
+            // aquí podrías guardar en localStorage si quisieras simular persistencia
+            window.location.href = 'DatosPersonales.html';
+        });
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

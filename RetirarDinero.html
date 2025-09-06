@@ -87,7 +87,24 @@
 
         <section class="card-perfil">
             <h5 class="mb-3 fw-bold">Retirar dinero</h5>
-            <p>Pantalla de retiro de fondos (placeholder para futura lógica).</p>
+            <form class="row g-3">
+                <div class="col-12 col-md-6">
+                    <label class="form-label">Monto a Retirar</label>
+                    <input type="number" class="form-control" placeholder="$100.000">
+                </div>
+                <div class="col-12 col-md-6">
+                    <label class="form-label">Medio de Pago</label>
+                    <select class="form-select">
+                        <option>Transferencia Bancaria</option>
+                        <option>Cuenta Vista</option>
+                        <option>Cuenta RUT</option>
+                    </select>
+                </div>
+                <div class="col-12">
+                    <button class="btn btn-danger">RETIRAR</button>
+                </div>
+            </form>
+
         </section>
     </main>
 
