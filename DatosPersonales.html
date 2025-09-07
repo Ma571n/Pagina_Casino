@@ -12,13 +12,12 @@
 
     <style>
         :root {
-            /* Ajusta si tu navbar es más alta/baja */
             --nav-h: 44px;
             --page-bg: #ffffff;
             --panel-bg: #f4f5f8;
         }
 
-        /* Página blanca completa, sin márgenes */
+        
         html,
         body {
             height: 100%;
@@ -33,14 +32,14 @@
             color: #1f1f1f;
         }
 
-        /* El contenido empieza justo debajo de la navbar fija */
+        
         main {
             flex: 1;
             padding-top: calc(var(--nav-h) + 8px);
-            /* separa levemente la navbar del body */
+            
         }
 
-        /* Sombra bajo la navbar (la clase viene desde menu.js) */
+        
         .custom-navbar {
             background: #4c2ca3;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
@@ -51,14 +50,14 @@
             color: #ffffff;
         }
 
-        /* Bloques a todo el ancho, sin márgenes laterales */
+       
         .full-bleed {
             width: 100%;
             margin: 0;
             padding: 0;
         }
 
-        /* Tarjeta del formulario */
+        
         .card-perfil {
             max-width: 1890px;
             margin: 16px auto 0;
@@ -69,7 +68,7 @@
             box-shadow: 0 10px 24px rgba(0, 0, 0, .12);
         }
 
-        /* Grid 2 columnas (responsive) */
+        
         .form-grid {
             display: grid;
             gap: 20px;
@@ -82,7 +81,7 @@
             }
         }
 
-        /* Etiquetas y campos */
+       
         .form-label {
             font-weight: 700;
             color: #222;
@@ -101,7 +100,7 @@
             color: #9aa0a6;
         }
 
-        /* Campo fecha con icono */
+        
         .input-group .input-group-text {
             background: #eef1f3;
             border: 1px solid #e0e3e7;
@@ -114,7 +113,7 @@
             border-radius: 18px 0 0 18px;
         }
 
-        /* Botón */
+        
         .btn-guardar {
             background: #4c7bf7;
             border: none;
@@ -127,7 +126,7 @@
             filter: brightness(.95);
         }
 
-        /* Footer morado como en la home */
+        
         .pie-pagina {
             background-color: #4c2ca3;
             color: #dcd6ff;
@@ -136,7 +135,7 @@
             margin-top: 3rem;
         }
 
-        /* Activo azul en barraInformacion (por si aún no lo tenías) */
+        
         #barraInfo .nav-link.active {
             background-color: #5534A4 !important;
             color: #fff !important;
