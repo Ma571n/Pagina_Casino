@@ -21,20 +21,16 @@ function getMenu(_id) {
     </nav>
   `;
 
-  // Detectar página actual
   const current = location.pathname.split('/').pop();
 
-  // Grupos de páginas que corresponden a una sola pestaña
   const billeteraPages = ["Billetera.html", "CargarDinero.html", "RetirarDinero.html"];
 
   elemento.querySelectorAll('.nav-link').forEach(a => {
     const target = a.getAttribute('data-path');
 
-    // Si la pestaña es Billetera virtual y la página actual está en ese grupo
     if (target === "Billetera.html" && billeteraPages.includes(current)) {
       a.classList.add('active');
     }
-    // Para las demás pestañas, comparación directa
     else if (target === current) {
       a.classList.add('active');
     }
