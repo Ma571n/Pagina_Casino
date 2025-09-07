@@ -1,17 +1,4 @@
-// ===============================
-// autentificacion.js (reemplazo completo)
-// ===============================
-//
-// Este archivo maneja el login/registro SIMULADO usando localStorage.
-// Importante: cerramos el modal primero y luego actualizamos navbar/footer
-// para evitar que quede 'modal-open' pegado al <body> y se congele el scroll.
 
-/**
- * Cierra un modal Bootstrap de forma robusta y, una vez oculto,
- * ejecuta un callback para actualizar la UI (navbar/footer).
- * - modalId: string (id del modal, p.ej. 'exampleModal' o 'exampleModal2')
- * - callback: function a ejecutar cuando el modal terminó de cerrarse
- */
 function cerrarModalYLuego(modalId, callback) {
   const el = document.getElementById(modalId);
 
@@ -35,15 +22,13 @@ function cerrarModalYLuego(modalId, callback) {
   }
   el.addEventListener('hidden.bs.modal', onHidden);
 
-  // Ocultar modal (esto disparará 'hidden.bs.modal')
+  // Ocultar modal 
   modal.hide();
 }
 
-/**
- * Valida el REGISTRO simulado.
- * Cierra el modal primero -> luego actualiza menús con el usuario.
- * (Antes lo hacías al revés y quedaba el body con 'modal-open', congelando scroll) :contentReference[oaicite:1]{index=1}
- */
+
+
+
 function validarRegistro(event) {
   event.preventDefault();
 
@@ -61,8 +46,7 @@ function validarRegistro(event) {
   localStorage.setItem('usuarioLogueado', 'true');
   localStorage.setItem('nombreUsuario', username);
 
-  // 1) Cierra el modal de REGISTRO
-  // 2) Al cerrarse, actualiza navbar y footer con versión "logueada"
+  
   cerrarModalYLuego('exampleModal2', function () {
     if (typeof getMenuLogged === 'function') {
       getMenuLogged('menuPrincipal', username);
