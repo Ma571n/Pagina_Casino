@@ -13,7 +13,7 @@
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     }
   },
-  "host": "petstore.swagger.io",
+  "host": "udp.coningenio.cl/2025-2/losk",
   "basePath": "/v2",
   "tags": [
     {
