@@ -14,7 +14,7 @@ class Conexion
     {
         $this->server = $_SERVER['SERVER_NAME'];
         $this->connection = null;
-        // $this->host = 'localhost';
+        $this->host = 'localhost';
         $this->host = '127.0.0.1';
         $this->port = 3306; //puerto por default de mysql
         $this->db = 'coningen_udp252_losk';
