@@ -1,75 +1,106 @@
-// Función para validar registro
+
+function cerrarModalYLuego(modalId, callback) {
+
+  const el = document.getElementById(modalId);
+  if (!el) {
+    document.body.classList.remove('modal-open');
+    document.body.style.removeProperty('paddingRight');
+    document.querySelectorAll('.modal-backdrop').forEach(b => b.remove());
+    if (typeof callback === 'function') callback();
+    return;
+  }
+
+  let modal = bootstrap.Modal.getInstance(el);
+  if (!modal) modal = new bootstrap.Modal(el);
+
+  function onHidden() {
+    el.removeEventListener('hidden.bs.modal', onHidden);
+    if (typeof callback === 'function') callback();
+  }
+  el.addEventListener('hidden.bs.modal', onHidden);
+
+  modal.hide();
+}
+
+
+
+
 function validarRegistro(event) {
-    event.preventDefault();
+  event.preventDefault();
 
-    // Aquí iría tu lógica de validación de registro real
-    // Por ahora simulamos un registro exitoso
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('passwordRegistro').value;
-    const password2 = document.getElementById('password2').value;
+  // Simulación de registro
+  const username = document.getElementById('username')?.value || '';
+  const password = document.getElementById('passwordRegistro')?.value || '';
+  const password2 = document.getElementById('password2')?.value || '';
 
-    // Validación básica de contraseñas
-    if (password !== password2) {
-        alert('Las contraseñas no coinciden');
-        return false;
-    }
-
-    // Guardamos en localStorage que el usuario está logueado
-    localStorage.setItem('usuarioLogueado', 'true');
-    localStorage.setItem('nombreUsuario', username);
-
-    // Actualizar el navbar inmediatamente
-    getMenuLogged('menuPrincipal', username);
-
-    // Cerrar el modal de registro
-    const modal = bootstrap.Modal.getInstance(document.getElementById('exampleModal2'));
-    modal.hide();
-
+  if (password !== password2) {
+    alert('Las contraseñas no coinciden');
     return false;
+  }
+
+  localStorage.setItem('usuarioLogueado', 'true');
+  localStorage.setItem('nombreUsuario', username);
+
+  
+  cerrarModalYLuego('exampleModal2', function () {
+    if (typeof getMenuLogged === 'function') {
+      getMenuLogged('menuPrincipal', username);
+    }
+    if (typeof getFooterLogged === 'function') {
+      getFooterLogged('menuFooter', username);
+    }
+  });
+
+  return false;
 }
 
-// Función para validar login
+/* Validar el LOGIN simulado. */
+
 function validarLogin(event) {
-    event.preventDefault();
+  event.preventDefault();
 
-    // Aquí iría tu lógica de validación real
-    // Por ahora simulamos un login exitoso
-    const email = document.getElementById('email').value;
+  const email = document.getElementById('email')?.value || '';
+  const nombreUsuario = email.includes('@') ? email.split('@')[0] : email || 'usuario';
 
-    // Simulamos que obtenemos el nombre del usuario (en un caso real vendría del backend)
-    const nombreUsuario = email.split('@')[0];
+  localStorage.setItem('usuarioLogueado', 'true');
+  localStorage.setItem('nombreUsuario', nombreUsuario);
 
-    // Guardamos en localStorage que el usuario está logueado
-    localStorage.setItem('usuarioLogueado', 'true');
-    localStorage.setItem('nombreUsuario', nombreUsuario);
-
-    // Actualizar el navbar inmediatamente
-    getMenuLogged('menuPrincipal', nombreUsuario);
-
-    // Cerrar el modal de login
-    const modal = bootstrap.Modal.getInstance(document.getElementById('exampleModal'));
-    modal.hide();
-
-    return false;
-}
-
-// Función para verificar autenticación
-function verificarAutenticacion() {
-    const usuarioLogueado = localStorage.getItem('usuarioLogueado');
-    const nombreUsuario = localStorage.getItem('nombreUsuario');
-
-    if (usuarioLogueado === 'true' && nombreUsuario) {
-        // Si está logueado, cargar el navbar y footer con el nombre de usuario
-        getMenuLogged('menuPrincipal', nombreUsuario);
-        getFooterLogged('menuFooter', nombreUsuario);
-    } else {
-        // Si no está logueado, cargar el navbar y footer normal
-        getMenu('menuPrincipal');
-        getFooter('menuFooter');
+  cerrarModalYLuego('exampleModal', function () {
+    if (typeof getMenuLogged === 'function') {
+      getMenuLogged('menuPrincipal', nombreUsuario);
     }
+    if (typeof getFooterLogged === 'function') {
+      getFooterLogged('menuFooter', nombreUsuario);
+    }
+  });
+
+  return false;
 }
 
-// Al cargar la página, verificar si el usuario está autenticado
-document.addEventListener('DOMContentLoaded', function() {
-    verificarAutenticacion();
+
+ /* Verifica el estado de autenticación al cargar cada página */
+
+function verificarAutenticacion() {
+  const usuarioLogueado = localStorage.getItem('usuarioLogueado');
+  const nombreUsuario = localStorage.getItem('nombreUsuario');
+
+  if (usuarioLogueado === 'true' && nombreUsuario) {
+    if (typeof getMenuLogged === 'function') {
+      getMenuLogged('menuPrincipal', nombreUsuario);
+    }
+    if (typeof getFooterLogged === 'function') {
+      getFooterLogged('menuFooter', nombreUsuario);
+    }
+  } else {
+    if (typeof getMenu === 'function') {
+      getMenu('menuPrincipal');
+    }
+    if (typeof getFooter === 'function') {
+      getFooter('menuFooter');
+    }
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  verificarAutenticacion();
 });

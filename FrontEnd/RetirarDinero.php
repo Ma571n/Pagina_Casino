@@ -106,8 +106,9 @@
             </form>
 
         </section>
-        <div id="menuFooter"></div>
     </main>
+    
+        <div id="menuFooter"></div>
 
     
 

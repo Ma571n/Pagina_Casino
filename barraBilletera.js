@@ -22,7 +22,6 @@ function getWalletMenu(_id) {
     </nav>
   `;
 
-  // Detectar página actual y marcar el link como activo
   const current = location.pathname.split('/').pop() || 'Billetera.html';
   elemento.querySelectorAll('.nav-link').forEach(a => {
     const target = a.getAttribute('data-path');

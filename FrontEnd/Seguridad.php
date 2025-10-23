@@ -3,20 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Perfil | Contacto</title>
+  <title>Perfil | Seguridad</title>
 
-  <!-- Bootstrap & Icons -->
+  
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
 
   <style>
     :root{
-      --nav-h: 44px;          /* alto aprox de tu navbar fija */
-      --page-bg: #ffffff;     /* fondo blanco total */
-      --panel-bg: #f4f5f8;    /* gris suave (tabs si lo usas) */
+      --nav-h: 44px;
+      --page-bg: #ffffff;
+      --panel-bg: #f4f5f8;
     }
 
-    /* Página blanca completa, sin márgenes */
     html, body { height: 100%; margin: 0; }
     body {
       display: flex; flex-direction: column; min-height: 100vh;
@@ -24,14 +23,11 @@
       color: #1f1f1f;
     }
 
-    /* Contenido debajo de la navbar fija */
     main { flex: 1; padding-top: calc(var(--nav-h) + 8px); }
 
-    /* Sombra bajo navbar (menu.js la aplica con .custom-navbar) */
     .custom-navbar { background:#4c2ca3; box-shadow:0 2px 10px rgba(0,0,0,.15); }
     .navbar-brand { font-weight:600; color:#fff; }
 
-    /* Tarjeta principal */
     .card-perfil{
       max-width: 1890px;
       margin: 16px auto 0;
@@ -42,16 +38,6 @@
       box-shadow: 0 10px 24px rgba(0,0,0,.12);
     }
 
-    /* Grid responsivo 2 columnas */
-    .form-grid{
-      display: grid; gap: 20px;
-      grid-template-columns: 1fr 1fr;
-    }
-    @media (max-width: 992px){
-      .form-grid{ grid-template-columns: 1fr; }
-    }
-
-    /* Labels & campos */
     .form-label{ font-weight:700; color:#222; margin-bottom:6px; }
     .input-rounded{
       background:#eef1f3; border:1px solid #e0e3e7;
@@ -59,21 +45,19 @@
     }
     .input-rounded::placeholder{ color:#9aa0a6; }
 
-    /* Botón */
     .btn-guardar{
       background:#4c7bf7; border:none; font-weight:800;
       padding: 12px 22px; border-radius: 14px;
     }
     .btn-guardar:hover{ filter: brightness(.95); }
 
-    /* Footer morado consistente */
     .pie-pagina{
       background-color:#4c2ca3; color:#dcd6ff;
       padding:28px 0 110px; border-top:1px solid rgba(255,255,255,.08);
       margin-top:3rem;
     }
 
-    /* Activo azul en la barra superior (barraInformacion) */
+  
     #barraInfo .nav-link.active {
       background-color: #5534A4 !important;
       color: #fff !important;
@@ -84,45 +68,50 @@
 </head>
 
 <body>
-  <!-- Navbar generada por menu.js -->
-  <header id="menuPrincipal"></header>
+    <header id="menuPrincipal"></header>
 
   <main>
-    <!-- Barra superior (Datos personales / Contacto / Seguridad / Billetera) -->
+    <!-- Barra de tabs de perfil -->
     <section id="barraInfo" class="barra-principal"></section>
 
-    <!-- Tarjeta con formulario editable -->
+    <!-- Tarjeta -->
     <section class="card-perfil">
-      <form id="formContacto">
-        <div class="form-grid">
-          <!-- Columna izquierda -->
-          <div>
-            <label class="form-label" for="telefono">Teléfono</label>
-            <input id="telefono" name="telefono" type="tel" class="form-control input-rounded"
-                   placeholder="+56 9 1234 5678" value="+56 9 1234 5678">
-
-            <label class="form-label mt-3" for="direccion">Dirección</label>
-            <input id="direccion" name="direccion" type="text" class="form-control input-rounded"
-                   placeholder="Calle Falsa 123, Santiago" value="Calle Falsa 123, Santiago">
-          </div>
-
-          <!-- Columna derecha -->
-          <div>
-            <label class="form-label" for="correo">Correo Electrónico</label>
-            <input id="correo" name="correo" type="email" class="form-control input-rounded"
-                   placeholder="correo@mail.udp.cl" value="correo@mail.udp.cl">
-          </div>
+      <form id="formSeguridad">
+        <!-- Contraseña actual (precargada con 12345) -->
+        <label class="form-label" for="oldPassword">Contraseña actual</label>
+        <div class="input-group">
+          <input id="oldPassword" type="password" class="form-control input-rounded" value="12345">
+          <span class="input-group-text toggle-pass" data-target="oldPassword">
+            <i class="bi bi-eye-slash"></i>
+          </span>
         </div>
 
-        <div class="mt-4">
-          <button id="guardarContacto" type="submit" class="btn btn-guardar">Guardar cambios</button>
+        <!-- Nueva contraseña -->
+        <label class="form-label mt-3" for="newPassword">Nueva contraseña</label>
+        <div class="input-group">
+          <input id="newPassword" type="password" class="form-control input-rounded" placeholder="Escribe tu nueva contraseña">
+          <span class="input-group-text toggle-pass" data-target="newPassword">
+            <i class="bi bi-eye-slash"></i>
+          </span>
         </div>
-      </form>
-    </section>
-  </main>
 
-  <!-- Contenedor del footer (evita footer anidado) -->
-  <div id="menuFooter"></div>
+        <!-- Repetir nueva contraseña -->
+        <label class="form-label mt-3" for="rePassword">Repetir nueva contraseña</label>
+        <div class="input-group">
+          <input id="rePassword" type="password" class="form-control input-rounded" placeholder="Repite tu nueva contraseña">
+          <span class="input-group-text toggle-pass" data-target="rePassword">
+            <i class="bi bi-eye-slash"></i>
+          </span>
+        </div>
+
+                <div class="mt-4">
+                    <button type="button" class="btn btn-guardar">Guardar cambios</button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <div id="menuFooter"></div>
 
     <!-- Scripts -->
     <script src="navbarconlogin.js"></script>

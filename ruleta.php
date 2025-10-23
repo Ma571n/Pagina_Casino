@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ruleta</title>
+
+  <!-- Bootstrap & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+
+  <style>
+    :root {
+      --nav-h: 44px;
+      --page-bg: #ffffff;
+      --panel-bg: #f4f5f8;
+      --card-bd: #b388ff;
+      --accent: #4c7bf7;
+      --purple: #4c2ca3;
+      
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background: var(--page-bg);
+      color: #1f1f1f;
+    }
+
+    
+    main {
+      flex: 1;
+      padding-top: calc(var(--nav-h) + 8px);
+    }
+
+    
+    .custom-navbar {
+      background: var(--purple);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, .15);
+    }
+
+    .navbar-brand {
+      font-weight: 600;
+      color: #fff;
+    }
+
+    
+    .card-perfil {
+      background: #fff;
+      border: 2px solid var(--card-bd);
+      border-radius: 22px;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, .12);
+      padding: 18px;
+    }
+
+    
+    .game-grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: 1.1fr 1fr;
+      
+      max-width: 1900px;
+      margin: 8px auto 0;
+      padding: 0 12px;
+    }
+
+    @media (max-width: 1200px) {
+      .game-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    
+    .game-image {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 16px;
+      object-fit: cover;
+    }
+
+   
+    .panel-title {
+      font-weight: 800;
+      font-size: 1.1rem;
+      margin-bottom: .5rem;
+    }
+
+    
+    .chips-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: .95rem;
+      color: #fff;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, .18);
+      border: 2px solid rgba(0, 0, 0, .08);
+      user-select: none;
+    }
+
+    .chip.red {
+      background: #d0342c;
+    }
+
+    
+    .chip.black {
+      background: #121212;
+    }
+
+    
+    .chip.green {
+      background: #1c9b4b;
+    }
+
+    
+    .chip.outline {
+      background: transparent;
+      color: #111;
+      border-color: #ccc;
+    }
+
+    
+    .right-stack {
+      display: grid;
+      gap: 12px;
+    }
+
+  
+    .pie-pagina {
+      background: #4c2ca3;
+      color: #dcd6ff;
+      padding: 28px 0 110px;
+      border-top: 1px solid rgba(255, 255, 255, .08);
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar generada por menu.js -->
+  <header id="menuPrincipal"></header>
+
+  <main>
+    <section class="game-grid">
+      <!-- Columna izquierda: rueda -->
+      <div class="card-perfil">
+        <img class="game-image" src="https://play-lh.googleusercontent.com/ESqlYKxFle187YctyolXFL74uo8DM-8dh4TWsX6ijWcl_KzXHcu9C7g3Anubc6hdbSo" alt="Rueda de ruleta">
+      </div>
+
+      <!-- Columna derecha: info + mesa -->
+      <div class="right-stack">
+        <!-- Saldo actual -->
+<div class="card-perfil text-center">
+  <div class="panel-title">Saldo actual</div>
+  <div id="saldo-actual" style="font-size: 1.6rem; font-weight: bold; color: var(--accent);">
+    $25,000
+  </div>
+</div>
+        <!-- Encima de la imagen: últimas 5 apuestas (ejemplo visual) -->
+        <div class="card-perfil">
+          <div class="panel-title">Últimas 5 apuestas</div>
+          <div class="chips-row" aria-label="últimas 5 apuestas">
+            <!-- Ajusta colores según el número si quieres ser más fiel -->
+            <span class="chip red">2</span>
+            <span class="chip black">9</span>
+            <span class="chip red">35</span>
+            <span class="chip red">19</span>
+            <span class="chip green">0</span>
+          </div>
+        </div>
+
+        <!-- Imagen de la mesa/paño -->
+        <div class="card-perfil">
+          <img class="game-image" src="CasillasNumeros.png" alt="Mesa de ruleta / paño">
+        </div>
+
+        <!-- Debajo de la imagen: últimos eventos (números donde cayó la bola) -->
+        <div class="card-perfil">
+          <div class="panel-title">Últimos eventos</div>
+          <div class="chips-row" aria-label="últimos resultados">
+            <!-- Ejemplos: puedes listar 10 o más -->
+            <span class="chip red">3</span>
+            <span class="chip black">26</span>
+            <span class="chip red">23</span>
+            <span class="chip black">11</span>
+            <span class="chip red">16</span>
+            <span class="chip red">35</span>
+            <span class="chip red">19</span>
+            <span class="chip black">4</span>
+            <span class="chip red">32</span>
+            <span class="chip green">0</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer (contenedor; lo rellena footer.js) -->
+  <div id="menuFooter"></div>
+
+  <script src="navbarsinlogin.js"></script>
+  <script src="navbarconlogin.js"></script>
+  <script src="autentificacion.js"></script>
+  <script src="footer.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

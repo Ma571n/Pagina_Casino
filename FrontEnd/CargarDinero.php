@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Perfil | Billetera</title>
+    <title>Perfil | Billetera - Cargar</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <style>
@@ -60,19 +60,15 @@
             margin-top: 3rem;
         }
 
-        /* Estilo personalizado para el link activo de barraInformacion */
         #barraInfo .nav-link.active {
             background-color: #5534a1 !important;
-            /* azul */
             color: #fff !important;
             border-color: #5534a1 !important;
             border-radius: 14px;
         }
 
-
         #barraBilletera .nav-link.active {
             background-color: #4c7bf7 !important;
-            /* azul */
             color: #fff !important;
             border-color: #4c7bf7 !important;
             border-radius: 14px;
@@ -80,62 +76,44 @@
     </style>
 </head>
 
-</head>
-<header id="menuPrincipal"></header>
+<body>
+    <header id="menuPrincipal"></header>
 
-<main>
-    <section id="barraInfo" class="barra-principal"></section>
-    <section id="barraBilletera"></section>
+    <main>
+        <section id="barraInfo" class="barra-principal"></section>
+        <section id="barraBilletera"></section>
 
-    <section class="card-perfil">
-        <div class="table-responsive" style="max-height:420px;">
-  <table class="table align-middle">
-    <thead>
-      <tr>
-        <th>FECHA</th>
-        <th>ABONO (+)</th>
-        <th>RETIROS (-)</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>07/09/2025 · 23:38</td>
-        <td class="monto-pos">+ $20.000</td>
-        <td>—</td>
-      </tr>
-      <tr>
-        <td>06/09/2025 · 18:21</td>
-        <td class="monto-pos">+ $10.000</td>
-        <td>—</td>
-      </tr>
-      <tr>
-        <td>04/09/2025 · 15:08</td>
-        <td>—</td>
-        <td class="monto-neg">- $25.000</td>
-      </tr>
-      <tr>
-        <td>04/09/2025 · 14:09</td>
-        <td class="monto-pos">+ $10.000</td>
-        <td>—</td>
-      </tr>
-      <tr>
-        <td>03/09/2025 · 12:05</td>
-        <td class="monto-pos">+ $20.000 </td>
-        <td>—</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+        <section class="card-perfil">
+            <h5 class="mb-3 fw-bold">Cargar dinero</h5>
+            <form class="row g-3">
+                <div class="col-12 col-md-6">
+                    <label class="form-label">Monto a Cargar</label>
+                    <input type="number" class="form-control" placeholder="$5.000">
+                </div>
+                <div class="col-12 col-md-6">
+                    <label class="form-label">Medio de Pago</label>
+                    <select class="form-select">
+                        <option>WebPay</option>
+                        <option>Tarjeta de Crédito/Débito</option>
+                        <option>Transferencia Bancaria</option>
+                    </select>
+                </div>
+                <div class="col-12">
+                    <button class="btn btn-success">CARGAR</button>
+                </div>
+            </form>
 
-    </section>
-</main>
-<div id="menuFooter"></div>
-<script src="navbarconlogin.js"></script>
-<script src="footer.js"></script>
-<script src="barraInformacion.js"></script>
-<script src="barraBilletera.js"></script>
-<script src="autentificacion.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        </section>
+    </main>
+    <div id="menuFooter"></div>
+
+
+    <script src="navbarconlogin.js"></script>
+    <script src="footer.js"></script>
+    <script src="barraInformacion.js"></script>
+    <script src="barraBilletera.js"></script>
+    <script src="autentificacion.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
