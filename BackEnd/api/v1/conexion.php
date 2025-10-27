@@ -45,7 +45,7 @@ class Conexion
             if (!$this->connection) {
                 throw new Exception("Error en la conexión: " . mysqli_connect_error());
             }
-            echo 'conectado';
+            //echo 'conectado';
             return $this->connection;
         } catch (Exception $ex) {
             error_log($ex->getMessage());
