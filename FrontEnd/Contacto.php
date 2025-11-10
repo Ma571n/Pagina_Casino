@@ -120,7 +120,7 @@
     <!-- Scripts -->
     <script src="navbarconlogin.js"></script>
     <script src="footer.js"></script>
-    <script src="barraInformacion.js"></script>
+    <script src="barraInformacion.php"></script>
     <script src="autentificacion.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

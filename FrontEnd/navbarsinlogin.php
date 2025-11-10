@@ -2,7 +2,7 @@ function getMenu(_id) {
     const elemento = document.getElementById(_id);
     elemento.innerHTML = `<nav class="navbar navbar-expand-lg fixed-top custom-navbar">
         <div class="container">
-            <a class="navbar-brand" href="index.html">
+            <a class="navbar-brand" href="index.php">
                 <img src="https://i.pinimg.com/736x/40/9c/2f/409c2f2f42c7c3589b5e5cddedba30c2.jpg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
                 El casino de los K
             </a>
@@ -83,27 +83,19 @@ function getMenu(_id) {
                                             <div class="col-12">
                                                 <div class="form-floating mb-3">
                                                     <input type="text" class="form-control" id="rut" placeholder="rut">
-                                                    <label for="rut">Rut del Usuario</label>
+                                                    <label for="rut">Username</label>
                                                 </div>
                                                 <div class="form-floating mb-3">
                                                     <input type="text" class="form-control" id="username" placeholder="username">
-                                                    <label for="username">Nombre completo</label>
+                                                    <label for="username">Password</label>
                                                 </div>
                                                 <div class="form-floating mb-3">
-                                                    <input type="date" class="form-control" id="fecha" placeholder="fecha">
-                                                    <label for="fecha">Fecha de nacimiento</label>
+                                                    <input type="text" class="form-control" id="fecha" placeholder="fecha">
+                                                    <label for="fecha">Persona ID</label>
                                                 </div>
                                                 <div class="form-floating mb-3">
                                                     <input type="email" class="form-control" id="emailRegistro" placeholder="name@example.com">
-                                                    <label for="emailRegistro">Correo Electrónico</label>
-                                                </div>
-                                                <div class="form-floating mb-3">
-                                                    <input type="password" class="form-control" id="passwordRegistro" placeholder="Password">
-                                                    <label for="passwordRegistro">Contraseña</label>
-                                                </div>
-                                                <div class="form-floating mb-3">
-                                                    <input type="password" class="form-control" id="password2" placeholder="Password">
-                                                    <label for="password2">Repetir Contraseña</label>
+                                                    <label for="emailRegistro">Activo</label>
                                                 </div>
                                             </div>
                                         </div>

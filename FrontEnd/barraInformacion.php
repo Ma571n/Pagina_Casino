@@ -11,10 +11,10 @@ function getMenu(_id) {
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav nav-links-custom">
-            <a class="nav-link" href="DatosPersonales.html" data-path="DatosPersonales.html">Datos personales</a>
-            <a class="nav-link" href="Contacto.html" data-path="Contacto.html">Contacto</a>
-            <a class="nav-link" href="Seguridad.html" data-path="Seguridad.html">Seguridad</a>
-            <a class="nav-link" href="Billetera.html" data-path="Billetera.html">Billetera virtual</a>
+            <a class="nav-link" href="DatosPersonales.php" data-path="DatosPersonales.php">Datos personales</a>
+            <a class="nav-link" href="Contacto.php" data-path="Contacto.php">Contacto</a>
+            <a class="nav-link" href="Seguridad.php" data-path="Seguridad.php">Seguridad</a>
+            <a class="nav-link" href="Billetera.php" data-path="Billetera.php">Billetera virtual</a>
           </div>
         </div>
       </div>
@@ -23,12 +23,12 @@ function getMenu(_id) {
 
   const current = location.pathname.split('/').pop();
 
-  const billeteraPages = ["Billetera.html", "CargarDinero.html", "RetirarDinero.html"];
+  const billeteraPages = ["Billetera.php", "CargarDinero.php", "RetirarDinero.php"];
 
   elemento.querySelectorAll('.nav-link').forEach(a => {
     const target = a.getAttribute('data-path');
 
-    if (target === "Billetera.html" && billeteraPages.includes(current)) {
+    if (target === "Billetera.php" && billeteraPages.includes(current)) {
       a.classList.add('active');
     }
     else if (target === current) {

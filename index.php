@@ -359,7 +359,7 @@ $mesas = getApiData($endpoint, $token);
     </main>
 
     <!-- Scripts -->
-    <script src="navbarsinlogin.js"></script>
+    <script src="navbarsinlogin.php"></script>
     <script src="navbarconlogin.js"></script>
     <script src="footer.js"></script>
     <script src="autentificacion.js"></script>

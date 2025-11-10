@@ -2,7 +2,7 @@ function getMenuLogged(_id, userName) {
     const elemento = document.getElementById(_id);
     elemento.innerHTML = `<nav class="navbar navbar-expand-lg fixed-top custom-navbar">
         <div class="container">
-            <a class="navbar-brand" href="index.html">
+            <a class="navbar-brand" href="index.php">
                 <img src="https://i.pinimg.com/736x/40/9c/2f/409c2f2f42c7c3589b5e5cddedba30c2.jpg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
                 El casino de los K
             </a>
@@ -19,8 +19,8 @@ function getMenuLogged(_id, userName) {
                             ${userName}
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                            <li><a class="dropdown-item" href="DatosPersonales.html"><i class="bi bi-person me-2"></i>Perfil de Usuario</a></li>
-                            <li><a class="dropdown-item" href="billetera.html"><i class="bi bi-wallet2 me-2"></i>Billetera</a></li>
+                            <li><a class="dropdown-item" href="DatosPersonales.php"><i class="bi bi-person me-2"></i>Perfil de Usuario</a></li>
+                            <li><a class="dropdown-item" href="Billetera.php"><i class="bi bi-wallet2 me-2"></i>Billetera</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="#" onclick="cerrarSesion()"><i class="bi bi-box-arrow-right me-2"></i>Cerrar Sesión</a></li>
                         </ul>

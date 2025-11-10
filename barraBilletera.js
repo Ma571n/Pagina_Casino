@@ -40,9 +40,9 @@ function getWalletMenu(_id) {
             </button>
             <div class="collapse navbar-collapse" id="navbarWallet">
               <div class="navbar-nav nav-links-custom">
-                <a class="nav-link" href="Billetera.html" data-path="Billetera.html">Histórico de transacciones</a>
-                <a class="nav-link" href="CargarDinero.html" data-path="CargarDinero.html">Cargar dinero</a>
-                <a class="nav-link" href="RetirarDinero.html" data-path="RetirarDinero.html">Retirar dinero</a>
+                <a class="nav-link" href="Billetera.php" data-path="Billetera.php">Histórico de transacciones</a>
+                <a class="nav-link" href="CargarDinero.php" data-path="CargarDinero.php">Cargar dinero</a>
+                <a class="nav-link" href="RetirarDinero.php" data-path="RetirarDinero.php">Retirar dinero</a>
               </div>
               
               <span id="saldo-actual-display" class="ms-auto fw-bold">Cargando saldo...</span> 
@@ -53,7 +53,7 @@ function getWalletMenu(_id) {
     `;
 
     // **2. Marcar el enlace activo (Lógica que ya tenías)**
-    const current = location.pathname.split('/').pop() || 'Billetera.html';
+    const current = location.pathname.split('/').pop() || 'Billetera.php';
     elemento.querySelectorAll('.nav-link').forEach(a => {
         const target = a.getAttribute('data-path');
         if (target === current) {
