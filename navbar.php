@@ -23,10 +23,10 @@ $usuarioLogueado = isset($_SESSION['usuario']);
                         <a class="nav-link text-white" href="juegos.php">Juegos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="perfil.php">Mi Perfil</a>
+                        <a class="nav-link text-white" href="DatosPersonales.php">datos personales</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="historial.php">Historial</a>
+                        <a class="nav-link text-white" href="Billetera.php">billetera</a>
                     </li>
                 <?php endif; ?>
             </ul>
@@ -38,8 +38,8 @@ $usuarioLogueado = isset($_SESSION['usuario']);
                             <i class="fas fa-user"></i> Hola, <?php echo htmlspecialchars($_SESSION['usuario']['nombre']); ?>
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="DatosPersonales.php"><i class="fas fa-user-circle"></i> Mi Perfil</a></li>
-                            <li><a class="dropdown-item" href="Billetera.php"><i class="fas fa-history"></i> Historial</a></li>
+                            <li><a class="dropdown-item" href="DatosPersonales.php"><i class="fas fa-user-circle"></i> datos personales</a></li>
+                            <li><a class="dropdown-item" href="Billetera.php"><i class="fas fa-history"></i> billetera</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item text-danger" href="login.php?action=logout"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
                         </ul>
