@@ -68,7 +68,9 @@
 </head>
 
 <body>
-    <header id="menuPrincipal"></header>
+  <!-- Navbar PHP integrado -->
+  <?php include 'navbar.php'; ?>
+   
 
   <main>
     <!-- Barra de tabs de perfil -->
