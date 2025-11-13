@@ -146,8 +146,8 @@
 </head>
 
 <body>
-    <!-- Navbar (fixed-top desde menu.js). La clase custom-navbar recibe la sombra -->
-    <header id="menuPrincipal"></header>
+    <!-- Navbar PHP integrado -->
+    <?php include 'navbar.php'; ?>
 
     <main>
         <!-- Tabs a todo el ancho, pegadas bajo la navbar -->

@@ -77,7 +77,9 @@
 </head>
 
 <body>
-    <header id="menuPrincipal"></header>
+    <!-- Navbar PHP integrado -->
+    <?php include 'navbar.php'; ?>
+    
 
     <main>
         <section id="barraInfo" class="barra-principal"></section>
