@@ -32,3 +32,4 @@ switch ($_method) {
         http_response_code(501);
         echo json_encode(['error' => 'No implementado']);
         break;
+        }

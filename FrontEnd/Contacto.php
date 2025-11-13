@@ -83,7 +83,9 @@
 </head>
 
 <body>
-  <header id="menuPrincipal"></header>
+  <!-- Navbar PHP integrado -->
+  <?php include 'navbar.php'; ?>
+  
 
   <main>
     <section id="barraInfo" class="barra-principal"></section>
@@ -123,5 +125,16 @@
     <script src="barraInformacion.php"></script>
     <script src="autentificacion.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Footer -->
+<footer class="pie-pagina">
+        <div class="container text-center">
+            <p>&copy; 2024 El casino de los K. Proyecto académico.</p>
+            <?php if (isset($_SESSION['usuario'])): ?>
+                <p class="text-muted">Sesión activa como: <?php echo htmlspecialchars($_SESSION['usuario']['nombre']); ?></p>
+            <?php else: ?>
+                <p class="text-muted">Inicia sesión para acceder a todos los juegos</p>
+            <?php endif; ?>
+        </div>
+    </footer>
 </body>
 </html>
