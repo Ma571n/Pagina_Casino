@@ -1,4 +1,6 @@
 <?php
+// Incluir el sistema de sesiones y navbar
+session_start();
 include_once('api/consumoEndpoint.php');
 
 $endpoint = 'https://udp.coningenio.cl/casino/api/v1/mesa/';
@@ -15,6 +17,7 @@ $mesas = getApiData($endpoint, $token);
     <title>Casino</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body {
             background: #312e81;
@@ -25,12 +28,12 @@ $mesas = getApiData($endpoint, $token);
         }
 
         .custom-navbar {
-            background-color: #4c2ca3;
+            background-color: #4c2ca3 !important;
         }
 
         .navbar-brand {
             font-weight: 600;
-            color: #ffffff;
+            color: #ffffff !important;
         }
         
         /* Carrusel */
@@ -58,6 +61,10 @@ $mesas = getApiData($endpoint, $token);
             background: #3a2b8f;
             color: #ffffff;
             border: none;
+        }
+
+        .btn-iniciar-sesion:hover {
+            background: #2a1d6f;
         }
 
         .content {
@@ -185,32 +192,30 @@ $mesas = getApiData($endpoint, $token);
             margin-top: 3rem;
         }
 
-        /* Spinner de carga para el navbar */
-        .navbar-loading {
-            height: 56px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        /* Estilos para el dropdown del usuario logueado */
+        .dropdown-menu {
             background-color: #4c2ca3;
+            border: 1px solid #6649b8;
         }
 
-        .spinner-border-sm {
-            width: 1rem;
-            height: 1rem;
+        .dropdown-item {
+            color: #ffffff;
+        }
+
+        .dropdown-item:hover {
+            background-color: #6649b8;
+            color: #ffffff;
+        }
+
+        .text-danger {
+            color: #ff6b6b !important;
         }
     </style>
 </head>
 <body>
-    <!-- Navbar con menu Script -->
-    <header id="menuPrincipal">
-        <div class="navbar-loading">
-            <div class="spinner-border spinner-border-sm text-light" role="status">
-                <span class="visually-hidden">Cargando..</span>
-            </div>
-        </div>
-    </header>
+    <!-- Navbar PHP integrado -->
+    <?php include 'navbar.php'; ?>
     
-
     <main>
         <!-- Carrusel -->
         <section id="inicio" class="carousel-container container">
@@ -299,6 +304,16 @@ $mesas = getApiData($endpoint, $token);
 
         <h2>Bienvenido a "El casino de los K". Conoce a nuestro equipo y aprende las reglas antes de jugar.</h2>
 
+        <!-- Mensaje de bienvenida personalizado -->
+        <?php if (isset($_SESSION['usuario'])): ?>
+            <div class="container mt-3">
+                <div class="alert alert-success text-center">
+                    <h4>¡Bienvenido de nuevo, <?php echo htmlspecialchars($_SESSION['usuario']['nombre']); ?>!</h4>
+                    <p class="mb-0">Disfruta de nuestros juegos y buena suerte.</p>
+                </div>
+            </div>
+        <?php endif; ?>
+
         <div id="acerca" class="sobre">
             <!-- Acerca de -->
             <div class="acerca">
@@ -353,44 +368,21 @@ $mesas = getApiData($endpoint, $token);
                 <p>Establece límites de tiempo y dinero. Juega por diversión y evita perseguir pérdidas, a veces se gana y a veces se pierde!</p>
             </div>
         </div>
-
-        <!-- Footer dinámico que cambiará según el estado de autenticación -->
-        <div id="menuFooter"></div>
     </main>
 
-    <!-- Scripts -->
-    <script src="navbarsinlogin.php"></script>
-    <script src="navbarconlogin.js"></script>
-    <script src="footer.js"></script>
-    <script src="autentificacion.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <script>
-        // Función para verificar autenticación que se ejecutará después de cargar los scripts
-        function inicializarNavbar() {
-            // Verificar si la función verificarAutenticación existe
-            if (typeof verificarAutenticacion === 'function') {
-                verificarAutenticacion();
-            } else {
-                // Si no existe, cargar el navbar por defecto después de un breve retraso
-                setTimeout(function() {
-                    if (typeof getMenu === 'function') {
-                        getMenu('menuPrincipal');
-                    } else {
-                        console.error('La función getMenu no está disponible');
-                    }
-                }, 100);
-            }
-        }
+    <!-- Footer -->
+    <footer class="pie-pagina">
+        <div class="container text-center">
+            <p>&copy; 2024 El casino de los K. Proyecto académico.</p>
+            <?php if (isset($_SESSION['usuario'])): ?>
+                <p class="text-muted">Sesión activa como: <?php echo htmlspecialchars($_SESSION['usuario']['nombre']); ?></p>
+            <?php else: ?>
+                <p class="text-muted">Inicia sesión para acceder a todos los juegos</p>
+            <?php endif; ?>
+        </div>
+    </footer>
 
-        // Ejecutar la inicialización después de que todos los scripts se hayan cargado
-        document.addEventListener('DOMContentLoaded', function () {
-            // Pequeño retraso para asegurar que los scripts externos se hayan cargado
-            setTimeout(inicializarNavbar, 50);
-        });
-        
-        // También ejecutar la inicialización cuando la ventana se carga completamente
-        window.addEventListener('load', inicializarNavbar);
-    </script>
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
