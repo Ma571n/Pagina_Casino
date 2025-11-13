@@ -1,3 +1,45 @@
+<?php
+include_once('api/consumoEndpoint.php');
+// --- Example usage of the function ---
+$endpoint = 'https://udp.coningenio.cl/casino/api/v1/persona/?id=1';
+$token = 'udp.2025';
+
+$personas = getApiData($endpoint, $token);
+
+if ($personas !== null) {
+    echo '<div class="row">';
+    foreach ($proyectos as $proyecto) {
+        if($proyecto['activo']){
+            $tarjeta = "
+                <div class='col-4 g-4'>
+                    <div class='card border-danger'>
+                        <div class='card-header text-center bg-danger text-white'>
+                            Proyecto Semestral
+                        </div>
+                        <div class='card-body'>
+                            <h5 class='card-title text-center'>" . htmlspecialchars($proyecto['nombre']) . "</h5>
+                            <hr>
+                            " . htmlspecialchars($proyecto['descripcion']) . "
+                            <hr>
+                            <strong>Integrantes</strong>
+                            " . htmlspecialchars($proyecto['integrantes']) . "
+                        </div>
+                        <div class='card-footer'>
+                            <a href='".htmlspecialchars($proyecto['url'])."' target='_blank'><button class='btn btn-dark w-100'><i class='fa fa-link'></i> Acceso</button></a>
+                        </div>
+                    </div>
+                </div>
+            ";
+            echo $tarjeta;
+        }
+    }
+    echo '</div>';
+} else {
+    echo "Error: No se pudo obtener la información. Por favor, revisa la URL y el token.";
+}
+
+?>
+
 function getMenuLogged(_id, userName) {
     const elemento = document.getElementById(_id);
     elemento.innerHTML = `<nav class="navbar navbar-expand-lg fixed-top custom-navbar">
