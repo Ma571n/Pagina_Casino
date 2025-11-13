@@ -304,15 +304,7 @@ $mesas = getApiData($endpoint, $token);
 
         <h2>Bienvenido a "El casino de los K". Conoce a nuestro equipo y aprende las reglas antes de jugar.</h2>
 
-        <!-- Mensaje de bienvenida personalizado -->
-        <?php if (isset($_SESSION['usuario'])): ?>
-            <div class="container mt-3">
-                <div class="alert alert-success text-center">
-                    <h4>¡Bienvenido de nuevo, <?php echo htmlspecialchars($_SESSION['usuario']['nombre']); ?>!</h4>
-                    <p class="mb-0">Disfruta de nuestros juegos y buena suerte.</p>
-                </div>
-            </div>
-        <?php endif; ?>
+        
 
         <div id="acerca" class="sobre">
             <!-- Acerca de -->
