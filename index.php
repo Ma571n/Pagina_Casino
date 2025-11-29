@@ -221,73 +221,63 @@ $mesas = getApiData($endpoint, $token);
     <?php include 'navbar.php'; ?>
     
     <main>
-        <!-- Carrusel -->
-        <section id="inicio" class="carousel-container container">
-            <?php
-            if ($mesas !== null && count($mesas) > 0) {    
-            echo '
-        <div id="carouselMesas" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-indicators">';
+        <section id="inicio" class="container my-5">
+    <?php
+    // Buscar la mesa activa con menor apuesta mínima
+    $mesaSeleccionada = null;
 
-        // --- Indicadores (los puntitos de abajo) ---
-        foreach ($mesas as $index => $mesa) {
-            $active = ($index === 0) ? 'active' : '';
-            echo "<button type='button' data-bs-target='#carouselMesas' data-bs-slide-to='{$index}' class='{$active}' aria-label='Slide " . ($index + 1) . "'></button>";
-        }
-
-        echo '</div><div class="carousel-inner rounded-5">';
-
-        // --- Diapositivas del carrusel ---
-        foreach ($mesas as $index => $mesa) {
+    if ($mesas !== null && count($mesas) > 0) {
+        foreach ($mesas as $mesa) {
             if ($mesa['activo']) {
-                $active = ($index === 0) ? 'active' : '';
-                $nombreMesa = htmlspecialchars($mesa['nombre']);
-                $nombreJuego = htmlspecialchars($mesa['juego']['nombre']);
-                $descripcion = htmlspecialchars($mesa['juego']['descripcion']);
-                $apuestaMin = number_format($mesa['apuesta']['minima'], 0, ',', '.');
-                $apuestaMax = number_format($mesa['apuesta']['maxima'], 0, ',', '.');
-                $estado = htmlspecialchars($mesa['estado']['nombre']);
-                $urlReglas = htmlspecialchars($mesa['juego']['reglas']['url']);
-
-                // Puedes usar imágenes distintas según la mesa o una por defecto
-                $imagen = "https://blog.meridianbet.pe/wp-content/uploads/2025/06/Ruleta-Europea-Casino-juegos-de-mesa.jpg";
-                if ($index % 2 == 1) {
-                    $imagen = "https://www.consumoteca.com/wp-content/uploads/Casino-online.jpg";
+                if ($mesaSeleccionada === null || $mesa['apuesta']['minima'] < $mesaSeleccionada['apuesta']['minima']) {
+                    $mesaSeleccionada = $mesa;
                 }
+            }
+        }
+    }
 
-                echo "
-                <div class='carousel-item {$active}'>
-                    <a href='{$urlReglas}''>
-                        <img src='{$imagen}' class='d-block w-100' alt='{$nombreMesa}' style='height: 600px; object-fit: cover;'>
-                    </a>
-                    <div class='carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded-4 p-3'>
-                        <h5>{$nombreMesa}</h5>
-                        <p>{$descripcion}</p>
-                        <p class='mb-0'>
-                            <strong>Apuesta:</strong> $ {$apuestaMin} - {$apuestaMax}<br>
-                            <strong>Estado:</strong> {$estado}
+    if ($mesaSeleccionada !== null) {
+        $nombreMesa   = htmlspecialchars($mesaSeleccionada['nombre']);
+        $nombreJuego  = htmlspecialchars($mesaSeleccionada['juego']['nombre']);
+        $descripcion  = htmlspecialchars($mesaSeleccionada['juego']['descripcion']);
+        $apuestaMin   = number_format($mesaSeleccionada['apuesta']['minima'], 0, ',', '.');
+        $apuestaMax   = number_format($mesaSeleccionada['apuesta']['maxima'], 0, ',', '.');
+        $estado       = htmlspecialchars($mesaSeleccionada['estado']['nombre']);
+        ?>
+        
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card bg-dark text-white shadow-lg rounded-4 overflow-hidden">
+                    <img src="https://blog.meridianbet.pe/wp-content/uploads/2025/06/Ruleta-Europea-Casino-juegos-de-mesa.jpg"
+                         class="card-img-top"
+                         alt="<?php echo $nombreMesa; ?>"
+                         style="height: 350px; object-fit: cover;">
+                    <div class="card-body">
+                        <h3 class="card-title mb-2"><?php echo $nombreMesa; ?></h3>
+                        <h5 class="mb-3"><?php echo $nombreJuego; ?></h5>
+                        <p class="mb-2"><?php echo $descripcion; ?></p>
+                        <p class="mb-1">
+                            <strong>Apuesta mínima:</strong> $ <?php echo $apuestaMin; ?><br>
+                            <strong>Apuesta máxima:</strong> $ <?php echo $apuestaMax; ?><br>
+                            <strong>Estado:</strong> <?php echo $estado; ?>
                         </p>
-                    </div>
-                </div>";
-                }
-            }
 
-            echo '
+                        <!-- Aquí rediriges a la ruleta definitiva -->
+                        <a href="laruletadefinitiva.php" class="btn btn-primary w-100 mt-3">
+                            Ir a la mesa
+                        </a>
+                    </div>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselMesas" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Anterior</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselMesas" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Siguiente</span>
-                </button>
-            </div>';
-            } else {
-            echo "<p class='text-center text-danger'>No se pudieron obtener las mesas del servidor.</p>";
-            }
-            ?>
-        </section>
+            </div>
+        </div>
+
+        <?php
+    } else {
+        echo "<p class='text-center text-danger'>No se pudieron obtener mesas activas del servidor.</p>";
+    }
+    ?>
+</section>
+
         
         <!-- Barra de menú -->
         <section>
