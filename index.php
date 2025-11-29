@@ -1,7 +1,11 @@
+
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 // Incluir el sistema de sesiones y navbar
 session_start();
-include_once('api/consumoEndpoint.php');
+include_once('consumoEndpoint.php');
 
 $endpoint = 'https://udp.coningenio.cl/casino/api/v1/mesa/';
 $token = 'udp.2025';
@@ -217,73 +221,82 @@ $mesas = getApiData($endpoint, $token);
     <?php include 'navbar.php'; ?>
     
     <main>
-        <!-- Carrusel -->
         <section id="inicio" class="carousel-container container">
-            <?php
-            if ($mesas !== null && count($mesas) > 0) {    
-            echo '
-        <div id="carouselMesas" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-indicators">';
+    <?php
+    // Seleccionar mesa activa con menor apuesta mínima
+    $mesaSeleccionada = null;
 
-        // --- Indicadores (los puntitos de abajo) ---
-        foreach ($mesas as $index => $mesa) {
-            $active = ($index === 0) ? 'active' : '';
-            echo "<button type='button' data-bs-target='#carouselMesas' data-bs-slide-to='{$index}' class='{$active}' aria-label='Slide " . ($index + 1) . "'></button>";
+    if ($mesas !== null && count($mesas) > 0) {
+        foreach ($mesas as $mesa) {
+            if (!empty($mesa['activo'])) { // solo mesas activas
+                if ($mesaSeleccionada === null || $mesa['apuesta']['minima'] < $mesaSeleccionada['apuesta']['minima']) {
+                    $mesaSeleccionada = $mesa;
+                }
+            }
         }
+    }
 
-        echo '</div><div class="carousel-inner rounded-5">';
+    if ($mesaSeleccionada !== null):
+        // Datos de la mesa (pero ya NO mostraremos nombre ni descripción)
+        $apuestaMin   = number_format($mesaSeleccionada['apuesta']['minima'], 0, ',', '.');
+        $apuestaMax   = number_format($mesaSeleccionada['apuesta']['maxima'], 0, ',', '.');
+        $estado       = htmlspecialchars($mesaSeleccionada['estado']['nombre']);
+    ?>
 
-        // --- Diapositivas del carrusel ---
-        foreach ($mesas as $index => $mesa) {
-            if ($mesa['activo']) {
-                $active = ($index === 0) ? 'active' : '';
-                $nombreMesa = htmlspecialchars($mesa['nombre']);
-                $nombreJuego = htmlspecialchars($mesa['juego']['nombre']);
-                $descripcion = htmlspecialchars($mesa['juego']['descripcion']);
-                $apuestaMin = number_format($mesa['apuesta']['minima'], 0, ',', '.');
-                $apuestaMax = number_format($mesa['apuesta']['maxima'], 0, ',', '.');
-                $estado = htmlspecialchars($mesa['estado']['nombre']);
-                $urlReglas = htmlspecialchars($mesa['juego']['reglas']['url']);
+        <div id="carouselMesas" class="carousel slide" data-bs-ride="false">
+            <div class="carousel-inner rounded-5">
 
-                // Puedes usar imágenes distintas según la mesa o una por defecto
-                $imagen = "https://blog.meridianbet.pe/wp-content/uploads/2025/06/Ruleta-Europea-Casino-juegos-de-mesa.jpg";
-                if ($index % 2 == 1) {
-                    $imagen = "https://www.consumoteca.com/wp-content/uploads/Casino-online.jpg";
-                }
+                <div class="carousel-item active">
 
-                echo "
-                <div class='carousel-item {$active}'>
-                    <a href='{$urlReglas}''>
-                        <img src='{$imagen}' class='d-block w-100' alt='{$nombreMesa}' style='height: 600px; object-fit: cover;'>
+                    <?php
+                    // Si está logueado: link directo a la ruleta
+                    // Si NO está logueado: abre modal de login
+                    $attrHref   = '';
+                    $attrExtras = '';
+
+                    if (isset($_SESSION['usuario']) && !empty($_SESSION['usuario'])) {
+                        $attrHref = 'href="laruletadefinitiva.php"';
+                    } else {
+                        $attrHref   = 'href="#"';
+                        $attrExtras = 'data-bs-toggle="modal" data-bs-target="#loginModal"';
+                    }
+                    ?>
+
+                    <!-- Imagen clickeable -->
+                    <a <?php echo $attrHref . ' ' . $attrExtras; ?> style="display:block;">
+                        <img src="https://blog.meridianbet.pe/wp-content/uploads/2025/06/Ruleta-Europea-Casino-juegos-de-mesa.jpg"
+                             class="d-block w-100"
+                             alt="Mesa de ruleta"
+                             style="height: 500px; object-fit: cover;">
                     </a>
-                    <div class='carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded-4 p-3'>
-                        <h5>{$nombreMesa}</h5>
-                        <p>{$descripcion}</p>
-                        <p class='mb-0'>
-                            <strong>Apuesta:</strong> $ {$apuestaMin} - {$apuestaMax}<br>
-                            <strong>Estado:</strong> {$estado}
-                        </p>
-                    </div>
-                </div>";
-                }
-            }
 
-            echo '
+                    <div class="carousel-caption d-none d-md-block">
+
+                        <!-- 🔥 Quitamos nombre, descripción y nombre del juego -->
+
+                        <!-- Solo mostramos apuestas + estado -->
+                        <p>
+                            Apuesta mínima: $<?php echo $apuestaMin; ?> |
+                            Máxima: $<?php echo $apuestaMax; ?><br>
+                            Estado: <?php echo $estado; ?>
+                        </p>
+
+                    </div>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselMesas" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Anterior</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselMesas" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Siguiente</span>
-                </button>
-            </div>';
-            } else {
-            echo "<p class='text-center text-danger'>No se pudieron obtener las mesas del servidor.</p>";
-            }
-            ?>
-        </section>
+
+            </div>
+        </div>
+
+    <?php else: ?>
+        <p class="text-center text-danger mt-4">
+            No hay mesas activas disponibles.
+        </p>
+    <?php endif; ?>
+</section>
+
+
+
+
         
         <!-- Barra de menú -->
         <section>
