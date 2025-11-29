@@ -1,4 +1,8 @@
+
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 // Incluir el sistema de sesiones y navbar
 session_start();
 include_once('api/consumoEndpoint.php');
