@@ -5,7 +5,7 @@ ini_set('display_errors', 1);
 
 // Incluir el sistema de sesiones y navbar
 session_start();
-include_once('../BackEnd/api/v1/consumoEndpoint.php');
+include_once('consumoEndpoint.php');
 
 $endpoint = 'https://udp.coningenio.cl/casino/api/v1/mesa/';
 $token = 'udp.2025';
