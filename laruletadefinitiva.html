@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Casino K - Aesthetic Final v2</title>
+    <title>Casino K - Aesthetic Final v3</title>
     <style>
-        /* --- ESTÉTICA FLAT / AESTHETIC --- */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #5D478B; /* Morado K */
+            background-color: #5D478B;
             color: white;
             display: flex;
             justify-content: center;
@@ -20,10 +19,9 @@
             user-select: none;
         }
 
-        /* --- MARCO BLANCO ESTILO "POLAROID" --- */
         .page-frame {
             background-color: rgba(0, 0, 0, 0.2); 
-            border: 15px solid white; /* El borde blanco */
+            border: 15px solid white; 
             border-radius: 20px;
             padding: 40px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.4);
@@ -38,7 +36,6 @@
             justify-content: center;
         }
 
-        /* --- IZQUIERDA: RULETA --- */
         .left-panel {
             flex: 0 0 auto;
             display: flex;
@@ -63,7 +60,6 @@
             transition: transform 4s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
 
-        /* Contenedor de cada número (gajo + texto) */
         .numero-rueda {
             position: absolute; top: 0; left: 50%; width: 2px; height: 50%;
             transform-origin: bottom center; 
@@ -107,7 +103,6 @@
             border-top: 35px solid #5D478B; z-index: 10;
         }
 
-        /* --- DERECHA: DASHBOARD Y TABLERO --- */
         .right-panel {
             flex: 1;
             display: flex;
@@ -119,18 +114,37 @@
             display: flex; justify-content: space-between; align-items: center;
             margin-bottom: 10px;
             border-bottom: 2px solid rgba(255,255,255,0.3);
-            padding-bottom: 10px;
+            padding-bottom: 15px;
         }
         .logo { font-size: 28px; font-weight: bold; letter-spacing: 2px; }
         
         .dashboard {
-            display: flex; gap: 20px; align-items: center;
-            background: rgba(255,255,255,0.1);
-            padding: 10px 20px; border-radius: 12px;
+            display: flex; gap: 15px; align-items: center;
         }
-        .saldo { font-size: 20px; font-weight: bold; min-width: 120px; }
-        
-        .fichas-list { display: flex; gap: 10px; }
+
+        .stat-box {
+            background: rgba(255,255,255,0.15);
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 16px;
+            border: 1px solid rgba(255,255,255,0.3);
+            min-width: 100px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1.2;
+        }
+        .stat-label { font-size: 10px; text-transform: uppercase; opacity: 0.8; letter-spacing: 1px; }
+        .stat-value { font-size: 18px; }
+
+        .fichas-list { 
+            display: flex; gap: 10px; 
+            margin-left: 10px; 
+            padding-left: 15px;
+            border-left: 2px solid rgba(255,255,255,0.2);
+        }
         .ficha {
             width: 45px; height: 45px; border-radius: 50%;
             display: flex; justify-content: center; align-items: center;
@@ -146,7 +160,6 @@
         .f-100 { background-color: #1E88E5; color: white; }
         .f-500 { background-color: #8E24AA; color: white; }
 
-        /* --- TABLERO --- */
         .tablero {
             display: flex; flex-direction: column; gap: 5px;
             padding: 10px;
@@ -176,15 +189,15 @@
         .bg-black { background-color: #212121; }
         .bg-blue { background-color: #1E88E5; }
         
-        /* AQUÍ ESTÁ EL CAMBIO: AMARILLO CON TEXTO BLANCO */
-        .bg-yellow { background-color: #FFB300; color: white; } 
+        .bg-yellow { 
+            background-color: #FFB300; 
+            color: white !important; 
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3); /* Sombra para legibilidad */
+        } 
         
         .cero { grid-row: 1 / span 3; grid-column: 1; font-size: 22px; }
 
-        /* Filas de controles */
         .grid-bottom { display: grid; gap: 4px; margin-top: 4px; }
-        
-        /* Ajuste: Fila principal de controles */
         .row-2 { display: grid; grid-template-columns: repeat(4, 1fr) 2fr; gap: 4px; } 
         .row-3 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; } 
 
@@ -202,7 +215,6 @@
         }
         .btn-girar:hover { background-color: #eee; }
 
-        /* Ficha puesta en el tablero */
         .chip-on-board {
             position: absolute; width: 22px; height: 22px; border-radius: 50%;
             background: white; border: 2px solid #333;
@@ -238,8 +250,18 @@
                 
                 <div class="header">
                     <span class="logo">CASINO K</span>
+                    
                     <div class="dashboard">
-                        <span class="saldo">Saldo: $<span id="saldo">1000</span></span>
+                        <div class="stat-box">
+                            <span class="stat-label">Saldo</span>
+                            <span class="stat-value">$<span id="saldo">1000</span></span>
+                        </div>
+
+                        <div class="stat-box">
+                            <span class="stat-label">Apuesta</span>
+                            <span class="stat-value">$<span id="apuesta-total">0</span></span>
+                        </div>
+
                         <div class="fichas-list">
                             <div class="ficha f-10 activa" onclick="selFicha(10, this)">10</div>
                             <div class="ficha f-50" onclick="selFicha(50, this)">50</div>
@@ -256,7 +278,6 @@
                     </div>
 
                     <div class="grid-bottom">
-                        
                         <div class="row-2">
                             <div class="casilla btn-txt bg-red" onclick="apostar('color', 'rojo', this)">Rojo</div>
                             <div class="casilla btn-txt bg-black" onclick="apostar('color', 'negro', this)">Negro</div>
@@ -282,7 +303,6 @@
     </div>
 
     <script>
-        // --- CONFIGURACIÓN ---
         let saldo = 1000;
         let ficha = 10;
         let apuestas = [];
@@ -295,11 +315,10 @@
         const ruleta = document.getElementById('ruleta');
         const gridNums = document.getElementById('grid-nums');
         const saldoTxt = document.getElementById('saldo');
+        const apuestaTotalTxt = document.getElementById('apuesta-total'); 
         const msg = document.getElementById('mensaje');
 
-        // --- INICIO ---
         function init() {
-            // 1. Dibujar Ruleta (CON NÚMEROS)
             const ang = 360 / nums.length;
             nums.forEach((n, i) => {
                 const wrap = document.createElement('div');
@@ -321,7 +340,6 @@
                 ruleta.appendChild(wrap);
             });
 
-            // 2. Dibujar Tablero (Números 1-36)
             for(let f=3; f>=1; f--) {
                 for(let c=0; c<12; c++) {
                     let n = c*3 + f;
@@ -336,7 +354,6 @@
                 }
             }
 
-            // 3. Botones de Columnas
             ['1ª', '2ª', '3ª'].forEach((txt, i) => {
                 let div = document.createElement('div');
                 div.className = 'casilla bg-blue btn-txt';
@@ -348,7 +365,11 @@
             });
         }
 
-        // --- LÓGICA DE JUEGO ---
+        function actualizarDisplayTotal() {
+            const total = apuestas.reduce((acc, curr) => acc + curr.cant, 0);
+            apuestaTotalTxt.innerText = total;
+        }
+
         function selFicha(v, el) {
             ficha = v;
             document.querySelectorAll('.ficha').forEach(x => x.classList.remove('activa'));
@@ -360,6 +381,8 @@
             saldo -= ficha;
             saldoTxt.innerText = saldo;
             apuestas.push({tipo, val, cant: ficha});
+            
+            actualizarDisplayTotal();
 
             const chip = document.createElement('div');
             chip.className = `chip-on-board v-${ficha}`;
@@ -376,6 +399,7 @@
             apuestas.forEach(a => saldo += a.cant);
             apuestas = [];
             saldoTxt.innerText = saldo;
+            actualizarDisplayTotal();
             document.querySelectorAll('.chip-on-board').forEach(e => e.remove());
             msg.innerText = "Mesa limpia";
         }
@@ -385,6 +409,7 @@
             const ult = apuestas.pop();
             saldo += ult.cant;
             saldoTxt.innerText = saldo;
+            actualizarDisplayTotal();
             const chips = document.querySelectorAll('.chip-on-board');
             if(chips.length) chips[chips.length-1].remove();
         }
@@ -455,6 +480,7 @@
 
             document.querySelectorAll('.chip-on-board').forEach(e => e.remove());
             apuestas = [];
+            actualizarDisplayTotal(); 
         }
 
         init();
