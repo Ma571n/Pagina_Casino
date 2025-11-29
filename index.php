@@ -221,97 +221,80 @@ $mesas = getApiData($endpoint, $token);
     <?php include 'navbar.php'; ?>
     
     <main>
-        <section id="inicio" 
-         class="d-flex align-items-center justify-content-center text-light"
-         style="
-            min-height: 70vh;
-            background-image: url('https://blog.meridianbet.pe/wp-content/uploads/2025/06/Ruleta-Europea-Casino-juegos-de-mesa.jpg');
-            background-size: cover;
-            background-position: center;
-            position: relative;
-         ">
-    <!-- Capa oscura encima de la imagen -->
-    <div style="
-        position: absolute;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.65);
-    "></div>
-
+        <section id="inicio" class="carousel-container container">
     <?php
-    // Buscar la mesa activa con menor apuesta mínima
+    // Seleccionar mesa activa con menor apuesta mínima
     $mesaSeleccionada = null;
 
     if ($mesas !== null && count($mesas) > 0) {
         foreach ($mesas as $mesa) {
-            if (!empty($mesa['activo'])) {
+            if (!empty($mesa['activo'])) { // solo mesas activas
                 if ($mesaSeleccionada === null || $mesa['apuesta']['minima'] < $mesaSeleccionada['apuesta']['minima']) {
                     $mesaSeleccionada = $mesa;
                 }
             }
         }
     }
+
+    if ($mesaSeleccionada !== null):
+        // Datos de la mesa (pero ya NO mostraremos nombre ni descripción)
+        $apuestaMin   = number_format($mesaSeleccionada['apuesta']['minima'], 0, ',', '.');
+        $apuestaMax   = number_format($mesaSeleccionada['apuesta']['maxima'], 0, ',', '.');
+        $estado       = htmlspecialchars($mesaSeleccionada['estado']['nombre']);
     ?>
 
-    <div class="container position-relative">
-        <?php if ($mesaSeleccionada !== null): ?>
-            <?php
-                $nombreMesa   = htmlspecialchars($mesaSeleccionada['nombre']);
-                $nombreJuego  = htmlspecialchars($mesaSeleccionada['juego']['nombre']);
-                $descripcion  = htmlspecialchars($mesaSeleccionada['juego']['descripcion']);
-                $apuestaMin   = number_format($mesaSeleccionada['apuesta']['minima'], 0, ',', '.');
-                $apuestaMax   = number_format($mesaSeleccionada['apuesta']['maxima'], 0, ',', '.');
-                $estado       = htmlspecialchars($mesaSeleccionada['estado']['nombre']);
-            ?>
+        <div id="carouselMesas" class="carousel slide" data-bs-ride="false">
+            <div class="carousel-inner rounded-5">
 
-            <div class="row justify-content-center">
-                <div class="col-lg-8 text-center text-lg-start">
-                    <p class="text-uppercase fw-semibold mb-1" style="letter-spacing: .2em;">
-                        Mesa destacada
-                    </p>
+                <div class="carousel-item active">
 
-                    <h1 class="display-4 fw-bold mb-2">
-                        <?php echo $nombreMesa; ?>
-                    </h1>
+                    <?php
+                    // Si está logueado: link directo a la ruleta
+                    // Si NO está logueado: abre modal de login
+                    $attrHref   = '';
+                    $attrExtras = '';
 
-                    <h3 class="fw-semibold mb-3">
-                        <?php echo $nombreJuego; ?>
-                    </h3>
+                    if (isset($_SESSION['usuario']) && !empty($_SESSION['usuario'])) {
+                        $attrHref = 'href="laruletadefinitiva.php"';
+                    } else {
+                        $attrHref   = 'href="#"';
+                        $attrExtras = 'data-bs-toggle="modal" data-bs-target="#loginModal"';
+                    }
+                    ?>
 
-                    <p class="lead mb-4">
-                        <?php echo $descripcion; ?>
-                    </p>
-
-                    <div class="d-flex flex-column flex-sm-row gap-3 mb-4 justify-content-center justify-content-lg-start">
-                        <div class="px-3 py-2 rounded-3 bg-dark bg-opacity-75">
-                            <span class="d-block text-uppercase small text-muted">Apuesta mínima</span>
-                            <span class="fw-bold fs-5">$ <?php echo $apuestaMin; ?></span>
-                        </div>
-                        <div class="px-3 py-2 rounded-3 bg-dark bg-opacity-75">
-                            <span class="d-block text-uppercase small text-muted">Apuesta máxima</span>
-                            <span class="fw-bold fs-5">$ <?php echo $apuestaMax; ?></span>
-                        </div>
-                        <div class="px-3 py-2 rounded-3 bg-dark bg-opacity-75">
-                            <span class="d-block text-uppercase small text-muted">Estado</span>
-                            <span class="fw-bold fs-6"><?php echo $estado; ?></span>
-                        </div>
-                    </div>
-
-                    <a href="laruletadefinitiva.php" 
-                       class="btn btn-lg btn-primary px-5 py-2 fw-semibold">
-                        Entrar a la mesa
+                    <!-- Imagen clickeable -->
+                    <a <?php echo $attrHref . ' ' . $attrExtras; ?> style="display:block;">
+                        <img src="https://blog.meridianbet.pe/wp-content/uploads/2025/06/Ruleta-Europea-Casino-juegos-de-mesa.jpg"
+                             class="d-block w-100"
+                             alt="Mesa de ruleta"
+                             style="height: 500px; object-fit: cover;">
                     </a>
+
+                    <div class="carousel-caption d-none d-md-block">
+
+                        <!-- 🔥 Quitamos nombre, descripción y nombre del juego -->
+
+                        <!-- Solo mostramos apuestas + estado -->
+                        <p>
+                            Apuesta mínima: $<?php echo $apuestaMin; ?> |
+                            Máxima: $<?php echo $apuestaMax; ?><br>
+                            Estado: <?php echo $estado; ?>
+                        </p>
+
+                    </div>
                 </div>
+
             </div>
-        <?php else: ?>
-            <div class="row justify-content-center">
-                <div class="col-md-8 text-center">
-                    <h2 class="fw-bold mb-3">No hay mesas disponibles</h2>
-                    <p class="mb-0">Inténtalo nuevamente en unos minutos.</p>
-                </div>
-            </div>
-        <?php endif; ?>
-    </div>
+        </div>
+
+    <?php else: ?>
+        <p class="text-center text-danger mt-4">
+            No hay mesas activas disponibles.
+        </p>
+    <?php endif; ?>
 </section>
+
+
 
 
         
