@@ -33,19 +33,10 @@ unset($_SESSION['error']);
                 <?php endif; ?>
             </ul>
 
-            <div class="d-flex">
+            <div class="d-flex align-items-center">
                 <?php if ($usuarioLogueado): ?>
-                    <div class="dropdown">
-                        <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
-                            Hola, <?= htmlspecialchars($_SESSION['usuario']['username']) ?>
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="DatosPersonales.php">Datos Personales</a></li>
-                            <li><a class="dropdown-item" href="Billetera.php">Billetera</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item text-danger" href="FrontEnd/login.php?action=logout">Cerrar Sesión</a></li>
-                        </ul>
-                    </div>
+                    <span class="me-2 text-white">Hola, <?= htmlspecialchars($_SESSION['usuario']['username']) ?></span>
+                    <a class="btn btn-danger" href="login.php?action=logout">Cerrar Sesión</a>
                 <?php else: ?>
                     <button class="btn btn-iniciar-sesion me-2" data-bs-toggle="modal" data-bs-target="#loginModal">
                         Iniciar Sesión
@@ -106,13 +97,15 @@ unset($_SESSION['error']);
   <div class="modal-dialog">
     <div class="modal-content">
 
-      <form method="POST" action="../BackEnd/api/v1/registro.php">
+      <form id="registroForm" method="POST">
         <div class="modal-header">
           <h5 class="modal-title">Registrarse</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
 
         <div class="modal-body">
+          <input type="hidden" name="action" value="registrar">
+
           <div class="mb-3">
             <label>Usuario</label>
             <input type="text" name="username" class="form-control" required>
@@ -129,6 +122,8 @@ unset($_SESSION['error']);
             <label>Confirmar contraseña</label>
             <input type="password" name="confirmPassword" class="form-control" required>
           </div>
+
+          <div id="registroError" class="text-danger mb-3" style="display:none;"></div>
         </div>
 
         <div class="modal-footer">
@@ -165,6 +160,34 @@ document.getElementById("loginForm")?.addEventListener("submit", function(e){
     .then(data => {
         if(data.success){
             location.reload(); // recarga index.php y muestra navbar logueado
+        } else {
+            errorDiv.style.display = "block";
+            errorDiv.textContent = data.error;
+        }
+    })
+    .catch(err => {
+        errorDiv.style.display = "block";
+        errorDiv.textContent = "Error de conexión. Intenta nuevamente.";
+    });
+});
+
+// =====================
+// REGISTRO AJAX
+// =====================
+document.getElementById("registroForm")?.addEventListener("submit", function(e){
+    e.preventDefault();
+    const form = e.target;
+    const formData = new FormData(form);
+    const errorDiv = document.getElementById("registroError");
+
+    fetch("../BackEnd/api/v1/registro.php", {
+        method: "POST",
+        body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+        if(data.success){
+            location.href = "index.php"; // redirige con navbar de sesión iniciada
         } else {
             errorDiv.style.display = "block";
             errorDiv.textContent = data.error;

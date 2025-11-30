@@ -4,6 +4,13 @@ require_once "../BackEnd/api/v1/conexion.php";
 
 header('Content-Type: application/json');
 
+if (isset($_GET['action']) && $_GET['action'] === 'logout') {
+    session_unset();
+    session_destroy();
+    header("Location: index.php");
+    exit;
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'login') {
 
     $username = trim($_POST['username']);
@@ -24,7 +31,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     if ($resultado && mysqli_num_rows($resultado) === 1) {
         $user = mysqli_fetch_assoc($resultado);
 
-        // Si guardas password en texto plano:
         if ($password === $user['password']) {
             $_SESSION['usuario'] = ['id'=>$user['id'],'username'=>$user['username']];
             echo json_encode(['success'=>true]);
@@ -38,6 +44,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     $conexion->closeConnection();
     exit;
 }
+?>
+
 
 
 
