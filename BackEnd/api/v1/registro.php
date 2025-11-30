@@ -1,59 +1,47 @@
 <?php
-session_start();
-require_once("conexion.php"); // OK, porque registro.php y conexion.php están juntos en /v1/
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST['action'] === "registrar") {
+include_once("conexion.php");
 
-    $username = trim($_POST['username']);
-    $fecha = $_POST['fecha_nacimiento'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'registrar') {
+
+    $username = $_POST['username'];
     $password = $_POST['password'];
-    $confirm = $_POST['confirmPassword'];
+    $fecha_nacimiento = $_POST['fecha_nacimiento'];
+    $activo = 1;
 
-    if ($password !== $confirm) {
-        $_SESSION['error'] = "Las contraseñas no coinciden.";
-        header("Location: ../../../FrontEnd/index.php");
-        exit;
+    // Crear instancia de conexión
+    $conexion = new Conexion();
+    $db = $conexion->getConnection(); // ESTA es la conexión mysqli
+
+    if (!$db) {
+        die("Error: No se pudo conectar a la base de datos");
     }
 
-    // Verificar si usuario ya existe
-    $stmt = $pdo->prepare("SELECT id FROM usuario WHERE username = ?");
-    $stmt->execute([$username]);
+    // 1) Insertar en tabla persona
+    $sqlPersona = "INSERT INTO persona (fecha_nacimiento, activo) VALUES (?, ?)";
+    $stmt = mysqli_prepare($db, $sqlPersona);
+    mysqli_stmt_bind_param($stmt, "si", $fecha_nacimiento, $activo);
+    mysqli_stmt_execute($stmt);
 
-    if ($stmt->rowCount() > 0) {
-        $_SESSION['error'] = "El nombre de usuario ya está en uso.";
-        header("Location: ../../../FrontEnd/index.php");
-        exit;
+    $persona_id = mysqli_insert_id($db);
+
+    if ($persona_id <= 0) {
+        die("Error al insertar persona");
     }
 
-    try {
-        $pdo->beginTransaction();
+    // 2) Insertar en tabla usuario
+    $sqlUsuario = "INSERT INTO usuario (username, password, persona_id, activo) VALUES (?, ?, ?, ?)";
+    $stmt2 = mysqli_prepare($db, $sqlUsuario);
+    mysqli_stmt_bind_param($stmt2, "ssii", $username, $password, $persona_id, $activo);
+    mysqli_stmt_execute($stmt2);
 
-        // Crear persona
-        $stmtP = $pdo->prepare("INSERT INTO persona (fecha_nacimiento, activo) VALUES (?, 1)");
-        $stmtP->execute([$fecha]);
-        $persona_id = $pdo->lastInsertId();
-
-        // Crear usuario
-        $hash = password_hash($password, PASSWORD_DEFAULT);
-
-        $stmtU = $pdo->prepare(
-            "INSERT INTO usuario (username, password, persona_id, activo) VALUES (?, ?, ?, 1)"
-        );
-        $stmtU->execute([$username, $hash, $persona_id]);
-
-        $pdo->commit();
-
-        $_SESSION['success'] = "Cuenta creada exitosamente.";
-        header("Location: ../../../FrontEnd/index.php");
-        exit;
-
-    } catch (Exception $e) {
-        $pdo->rollBack();
-        $_SESSION['error'] = "Error: " . $e->getMessage();
-        header("Location: ../../../FrontEnd/index.php");
-        exit;
+    if (mysqli_stmt_affected_rows($stmt2) > 0) {
+        echo "Registro exitoso";
+    } else {
+        echo "Error al registrar usuario";
     }
+
+    $conexion->closeConnection();
 }
-
-header("Location: ../../../FrontEnd/index.php");
-exit;

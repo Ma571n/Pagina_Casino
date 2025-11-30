@@ -1,36 +1,43 @@
 <?php
 session_start();
+require_once "../BackEnd/api/v1/conexion.php";
 
-// Procesar login - ACEPTA CUALQUIER COSA
+header('Content-Type: application/json');
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'login') {
-    $email = $_POST['email'] ?? 'usuario@ejemplo.com';
-    $password = $_POST['password'] ?? 'password';
-    
-    // Siempre devuelve éxito, sin validación
-    $nombre = "Usuario";
-    if (!empty($email)) {
-        $nombreParts = explode('@', $email);
-        $nombre = ucfirst($nombreParts[0]);
+
+    $username = trim($_POST['username']);
+    $password = trim($_POST['password']);
+
+    $conexion = new Conexion();
+    $db = $conexion->getConnection();
+
+    $sql = "SELECT u.id, u.username, u.password 
+            FROM usuario u
+            JOIN persona p ON u.persona_id = p.id
+            WHERE u.username=? AND u.activo=1 AND p.activo=1";
+    $stmt = mysqli_prepare($db, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $username);
+    mysqli_stmt_execute($stmt);
+    $resultado = mysqli_stmt_get_result($stmt);
+
+    if ($resultado && mysqli_num_rows($resultado) === 1) {
+        $user = mysqli_fetch_assoc($resultado);
+
+        // Si guardas password en texto plano:
+        if ($password === $user['password']) {
+            $_SESSION['usuario'] = ['id'=>$user['id'],'username'=>$user['username']];
+            echo json_encode(['success'=>true]);
+        } else {
+            echo json_encode(['success'=>false,'error'=>'Contraseña incorrecta']);
+        }
+    } else {
+        echo json_encode(['success'=>false,'error'=>'Usuario no encontrado']);
     }
-    
-    $_SESSION['usuario'] = [
-        'id' => rand(1, 1000),
-        'email' => $email,
-        'nombre' => $nombre
-    ];
-    
-    echo json_encode(['success' => true, 'message' => 'Login exitoso']);
+
+    $conexion->closeConnection();
     exit;
 }
 
-// Procesar logout
-if (isset($_GET['action']) && $_GET['action'] === 'logout') {
-    session_destroy();
-    header('Location: index.php');
-    exit;
-}
 
-// Si se accede directamente, redirigir
-header('Location: index.php');
-exit;
-?>
+
