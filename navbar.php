@@ -27,7 +27,6 @@ unset($_SESSION['error']);
         <div class="collapse navbar-collapse" id="navbarContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <?php if ($usuarioLogueado): ?>
-                    <li class="nav-item"><a class="nav-link text-white" href="juegos.php">Juegos</a></li>
                     <li class="nav-item"><a class="nav-link text-white" href="DatosPersonales.php">Datos Personales</a></li>
                     <li class="nav-item"><a class="nav-link text-white" href="Billetera.php">Billetera</a></li>
                 <?php endif; ?>
