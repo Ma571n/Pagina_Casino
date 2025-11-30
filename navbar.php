@@ -114,25 +114,30 @@ $usuarioLogueado = isset($_SESSION['usuario']);
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form id="registroForm" action="../BackEnd/api/v1/registro.php" method="POST">
-                <input type="hidden" name="action" value="registrar">
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="regUsername" name="username" placeholder="Usuario" required>
-                    <label for="regUsername">Usuario</label>
-                </div>
-                <div class="form-floating mb-3">
-                    <input type="date" class="form-control" id="regFecha" name="fecha_nacimiento" required>
-                    <label for="regFecha">Fecha de nacimiento</label>
-                </div>
-                <div class="form-floating mb-3">
-                    <input type="password" class="form-control" id="regPassword" name="password" placeholder="Contraseña" required>
-                    <label for="regPassword">Contraseña</label>
-                </div>
-                <div class="form-floating mb-3">
-                    <input type="password" class="form-control" id="regConfirmPassword" name="confirmPassword" placeholder="Confirmar Contraseña" required>
-                    <label for="regConfirmPassword">Confirmar Contraseña</label>
-                </div>
-                <button type="submit" class="btn btn-primary">Crear Cuenta</button>
-            </form>
+    <input type="hidden" name="action" value="registrar">
+
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" name="username" id="regUsername" placeholder="Usuario" required>
+        <label for="regUsername">Usuario</label>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input type="date" class="form-control" name="fecha_nacimiento" id="regFecha" required>
+        <label for="regFecha">Fecha de nacimiento</label>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input type="password" class="form-control" name="password" id="regPassword" placeholder="Contraseña" required>
+        <label for="regPassword">Contraseña</label>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input type="password" class="form-control" name="confirmPassword" id="regConfirmPassword" placeholder="Confirmar Contraseña" required>
+        <label for="regConfirmPassword">Confirmar Contraseña</label>
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100">Crear Cuenta</button>
+</form>
         </div>
     </div>
 </div>
