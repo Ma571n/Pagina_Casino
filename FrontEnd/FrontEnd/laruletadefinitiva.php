@@ -1,6 +1,7 @@
 <?php
 session_start();
-require_once 'consumoEndpoint.php';  // ajusta el nombre si tu archivo se llama distinto
+require_once 'consumoEndpoint.php';
+require_once 'db.php';  // conexión a la BD local
 
 $token = 'udp.2025';
 
@@ -29,17 +30,44 @@ if ($billetera === null) {
         foreach ($resp as $b) {
             if (!empty($b['activo'])) {
                 $billetera = $b;
+                // Guardar en sesión para que todas las páginas usen la misma billetera
+                $_SESSION['usuario']['id_billetera'] = $b['id'] ?? null;
                 break;
             }
         }
     }
 }
 
-$saldoInicial = 0;
-if ($billetera !== null && isset($billetera['saldo'])) {
-    $saldoInicial = (int)$billetera['saldo'];
+// Calcular saldo base desde la API + movimientos locales
+$saldoBase       = 0;
+$idBilleteraReal = null;
+
+if ($billetera !== null) {
+    $saldoBase       = isset($billetera['saldo']) ? (int)$billetera['saldo'] : 0;
+    $idBilleteraReal = $billetera['id'] ?? $idBilletera;
+}
+
+$totalMov = 0;
+if ($idBilleteraReal !== null) {
+    $stmt = $pdo->prepare("
+        SELECT COALESCE(SUM(monto), 0) AS total_mov
+        FROM billetera_movimientos
+        WHERE billetera_id_api = :id
+    ");
+    $stmt->execute([':id' => $idBilleteraReal]);
+    $row      = $stmt->fetch();
+    $totalMov = $row ? (int)$row['total_mov'] : 0;
+}
+
+$saldoInicial = $saldoBase + $totalMov;
+
+// 🔹 clave única de saldo/localStorage si aún la usas en JS
+$userKey = 'anonimo';
+if (isset($_SESSION['usuario']['id'])) {
+    $userKey = 'user_' . $_SESSION['usuario']['id'];
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -394,21 +422,14 @@ if ($billetera !== null && isset($billetera['saldo'])) {
         const msg = document.getElementById('mensaje');
 
         function cargarSaldoInicial() {
-            const guardado = localStorage.getItem(SALDO_KEY);
-            const numGuardado = guardado !== null ? parseInt(guardado, 10) : NaN;
+    // Usar SIEMPRE el saldo que viene del backend
+    saldoTxt.innerText = saldo;
+}
 
-            if (!isNaN(numGuardado)) {
-                saldo = numGuardado;
-            } else {
-                // Primera vez: guardar el saldo que vino desde el endpoint
-                localStorage.setItem(SALDO_KEY, saldo);
-            }
-            saldoTxt.innerText = saldo;
-        }
-
-        function guardarSaldo() {
-            localStorage.setItem(SALDO_KEY, saldo);
-        }
+function guardarSaldo() {
+    // Ya no usamos localStorage; el saldo real se guarda en la BD
+    // (esta función queda por compatibilidad para no cambiar más código)
+}
 
         function init() {
             const ang = 360 / nums.length;
@@ -537,13 +558,13 @@ if ($billetera !== null && isset($billetera['saldo'])) {
             }, 4000);
         };
 
-        function verificar(n) {
+                function verificar(n) {
             let ganancia = 0;
             let totalApuesta = apuestas.reduce((a,b)=>a+b.cant, 0);
 
             const esRojo = rojos.includes(n);
             const esNegro = !esRojo && n!==0;
-            const esPar = n!==0 && n%2===0;
+            const esPar   = n!==0 && n%2===0;
             const esImpar = n!==0 && n%2!==0;
             const col1 = [1,4,7,10,13,16,19,22,25,28,31,34];
             const col2 = [2,5,8,11,14,17,20,23,26,29,32,35];
@@ -553,31 +574,65 @@ if ($billetera !== null && isset($billetera['saldo'])) {
                 let gano = false;
                 let m = 0;
 
-                if(ap.tipo==='pleno' && ap.val===n) { gano=true; m=35; }
-                if(ap.tipo==='color' && ((ap.val==='rojo' && esRojo) || (ap.val==='negro' && esNegro))) { gano=true; m=1; }
-                if(ap.tipo==='paridad' && ((ap.val==='par' && esPar) || (ap.val==='impar' && esImpar))) { gano=true; m=1; }
-                if(ap.tipo==='mitad' && ((ap.val==='bajo' && n>=1 && n<=18) || (ap.val==='alto' && n>=19))) { gano=true; m=1; }
-                if(ap.tipo==='columna') {
-                    if((ap.val===1 && col1.includes(n)) || (ap.val===2 && col2.includes(n)) || (ap.val===3 && col3.includes(n))) { gano=true; m=2; }
+                if (ap.tipo === 'pleno'   && ap.val === n)                        { gano = true; m = 35; }
+                if (ap.tipo === 'color'   && ((ap.val === 'rojo'  && esRojo) ||
+                                             (ap.val === 'negro' && esNegro)))   { gano = true; m = 1; }
+                if (ap.tipo === 'paridad' && ((ap.val === 'par'   && esPar) ||
+                                             (ap.val === 'impar' && esImpar)))   { gano = true; m = 1; }
+                if (ap.tipo === 'mitad'   && ((ap.val === 'bajo' && n>=1  && n<=18) ||
+                                             (ap.val === 'alto' && n>=19)))       { gano = true; m = 1; }
+                if (ap.tipo === 'columna') {
+                    if ((ap.val === 1 && col1.includes(n)) ||
+                        (ap.val === 2 && col2.includes(n)) ||
+                        (ap.val === 3 && col3.includes(n))) { gano = true; m = 2; }
                 }
 
-                if(gano) ganancia += ap.cant * (m+1);
+                if (gano) ganancia += ap.cant * (m+1);
             });
 
+            // Actualizar saldo en el front
             saldo += ganancia;
             saldoTxt.innerText = saldo;
             guardarSaldo();
             document.getElementById('resultado-num').innerText = n;
 
-            const neto = ganancia - totalApuesta;
-            if(neto > 0) msg.innerText = `¡GANASTE $${neto}! Salió el ${n}`;
-            else if (neto < 0) msg.innerText = `Salió el ${n}. Perdiste.`;
-            else msg.innerText = `Salió el ${n}. Empate.`;
+            const neto = ganancia - totalApuesta; // puede ser +, -, o 0
 
+            // 👉 Registrar el movimiento en el backend si hubo cambio real
+            if (neto !== 0) {
+                fetch('registrarMovimientoJuego.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        monto: neto,       // positivo si ganancia neta, negativo si pérdida
+                        partida_id: null   // si más adelante usas id de partida, lo mandas aquí
+                    })
+                })
+                .then(r => r.json())
+                .then(data => {
+                    console.log('Respuesta registrarMovimientoJuego:', data);
+                    if (data.ok && typeof data.nuevo_saldo === 'number') {
+                        // Ajustar saldo al real calculado en PHP (API + movimientos)
+                        saldo = data.nuevo_saldo;
+                        saldoTxt.innerText = saldo;
+                    }
+                })
+                .catch(err => {
+                    console.error('Error al registrar movimiento de juego:', err);
+                });
+            }
+
+            // Mensaje al jugador
+            if (neto > 0)      msg.innerText = `¡GANASTE $${neto}! Salió el ${n}`;
+            else if (neto < 0) msg.innerText = `Salió el ${n}. Perdiste.`;
+            else               msg.innerText = `Salió el ${n}. Empate.`;
+
+            // Limpiar fichas del tablero
             document.querySelectorAll('.chip-on-board').forEach(e => e.remove());
             apuestas = [];
             actualizarDisplayTotal(); 
         }
+
 
         cargarSaldoInicial();
         init();

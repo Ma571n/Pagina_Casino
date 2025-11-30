@@ -10,6 +10,10 @@ $endpoint = 'https://udp.coningenio.cl/casino/api/v1/mesa/';
 $token = 'udp.2025';
 
 $mesas = getApiData($endpoint, $token);
+
+$nombreUsuario = isset($_SESSION['usuario']['nombre']) 
+    ? $_SESSION['usuario']['nombre'] 
+    : 'Invitado';
 ?>
 
 <!DOCTYPE html>
@@ -275,8 +279,8 @@ $mesas = getApiData($endpoint, $token);
 
                         <!-- Solo mostramos apuestas + estado -->
                         <p>
-                            Apuesta mínima: $<?php echo $apuestaMin; ?> |
-                            Máxima: $<?php echo $apuestaMax; ?><br>
+                            Apuesta mínima: 10 |
+                            Máxima: 500<br>
                             Estado: <?php echo $estado; ?>
                         </p>
 
@@ -373,13 +377,17 @@ $mesas = getApiData($endpoint, $token);
             </div>
         </div>
     </main>
+    <script>
+    const NOMBRE_USUARIO = <?php echo json_encode($nombreUsuario); ?>;
+</script>
+
 
     <!-- Footer -->
     <footer class="pie-pagina">
         <div class="container text-center">
             <p>&copy; 2024 El casino de los K. Proyecto académico.</p>
             <?php if (isset($_SESSION['usuario'])): ?>
-                <p class="text-muted">Sesión activa como: <?php echo htmlspecialchars($_SESSION['usuario']['nombre']); ?></p>
+                <p class="text-muted">Sesión activa como: <?php echo json_encode($nombreUsuario); ?></p>
             <?php else: ?>
                 <p class="text-muted">Inicia sesión para acceder a todos los juegos</p>
             <?php endif; ?>
