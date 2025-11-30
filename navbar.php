@@ -113,33 +113,29 @@ $usuarioLogueado = isset($_SESSION['usuario']);
                 <h1 class="modal-title fs-5" id="registroModalLabel">Registrarse</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form id="registroForm">
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="regUsername" name="username" placeholder="Usuario" required>
-                                <label for="regUsername">Usuario</label>
-                            </div>
-                            <div class="form-floating mb-3">
-                                <input type="email" class="form-control" id="regEmail" name="email" placeholder="name@example.com" required>
-                                <label for="regEmail">Correo Electrónico</label>
-                            </div>
-                            <div class="form-floating mb-3">
-                                <input type="password" class="form-control" id="regPassword" name="password" placeholder="Contraseña" required>
-                                <label for="regPassword">Contraseña</label>
-                            </div>
-                            <div class="form-floating mb-3">
-                                <input type="password" class="form-control" id="regConfirmPassword" name="confirmPassword" placeholder="Confirmar Contraseña" required>
-                                <label for="regConfirmPassword">Confirmar Contraseña</label>
-                            </div>
-                        </div>
-                    </div>
+            <form id="registroForm" action="../BackEnd/api/v1/registro.php" method="POST">
+                <input type="hidden" name="action" value="registrar">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="regUsername" name="username" placeholder="Usuario" required>
+                    <label for="regUsername">Usuario</label>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary">Crear Cuenta</button>
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control" id="regEmail" name="email" placeholder="Correo" required>
+                    <label for="regEmail">Correo</label>
                 </div>
+                <div class="form-floating mb-3">
+                    <input type="date" class="form-control" id="regFecha" name="fecha_nacimiento" required>
+                    <label for="regFecha">Fecha de nacimiento</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="password" class="form-control" id="regPassword" name="password" placeholder="Contraseña" required>
+                    <label for="regPassword">Contraseña</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="password" class="form-control" id="regConfirmPassword" name="confirmPassword" placeholder="Confirmar Contraseña" required>
+                    <label for="regConfirmPassword">Confirmar Contraseña</label>
+                </div>
+                <button type="submit" class="btn btn-primary">Crear Cuenta</button>
             </form>
         </div>
     </div>
