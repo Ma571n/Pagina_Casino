@@ -1,9 +1,51 @@
+<?php
+session_start();
+require_once 'consumoEndpoint.php';  // ajusta el nombre/ruta si tu archivo se llama distinto
+
+$token = 'udp.2025';
+
+// 1) Determinar qué billetera usar
+$billetera = null;
+$idBilletera = $_SESSION['usuario']['id_billetera'] ?? null;
+
+// a) Si tienes id_billetera en sesión, intenta usarlo
+if ($idBilletera !== null) {
+    $resp = getApiData(
+        "https://udp.coningenio.cl/casino/api/v1/billetera/?id=" . urlencode($idBilletera),
+        $token
+    );
+    if ($resp !== null && count($resp) > 0) {
+        $billetera = $resp[0];
+    }
+}
+
+// b) Si no hay nada en sesión o falló, toma la primera billetera activa como demo
+if ($billetera === null) {
+    $resp = getApiData(
+        "https://udp.coningenio.cl/casino/api/v1/billetera/",
+        $token
+    );
+    if ($resp !== null) {
+        foreach ($resp as $b) {
+            if (!empty($b['activo'])) {
+                $billetera = $b;
+                break;
+            }
+        }
+    }
+}
+
+$saldoInicial = 0;
+if ($billetera !== null && isset($billetera['saldo'])) {
+    $saldoInicial = (int)$billetera['saldo'];
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Casino K - Aesthetic Final v3</title>
+    <title>Casino K - Ruleta</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -192,7 +234,7 @@
         .bg-yellow { 
             background-color: #FFB300; 
             color: white !important; 
-            text-shadow: 0 1px 2px rgba(0,0,0,0.3); /* Sombra para legibilidad */
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
         } 
         
         .cero { grid-row: 1 / span 3; grid-column: 1; font-size: 22px; }
@@ -227,7 +269,6 @@
         .chip-on-board.v-500 { background: #8E24AA; }
 
         #mensaje { margin-top: 10px; text-align: center; height: 20px; font-weight: 500; opacity: 0.9; }
-
     </style>
 </head>
 <body>
@@ -254,7 +295,7 @@
                     <div class="dashboard">
                         <div class="stat-box">
                             <span class="stat-label">Saldo</span>
-                            <span class="stat-value">$<span id="saldo">1000</span></span>
+                            <span class="stat-value">$<span id="saldo"><?php echo $saldoInicial; ?></span></span>
                         </div>
 
                         <div class="stat-box">
@@ -282,9 +323,7 @@
                             <div class="casilla btn-txt bg-red" onclick="apostar('color', 'rojo', this)">Rojo</div>
                             <div class="casilla btn-txt bg-black" onclick="apostar('color', 'negro', this)">Negro</div>
                             <div class="casilla btn-txt bg-blue" onclick="apostar('paridad', 'par', this)">Par</div>
-                            
                             <div class="casilla btn-txt bg-yellow" onclick="apostar('paridad', 'impar', this)">Impar</div>
-                            
                             <div class="btn-girar" id="btnGirar">GIRAR</div>
                         </div>
 
@@ -303,7 +342,8 @@
     </div>
 
     <script>
-        let saldo = 1000;
+        // saldo inicial viene desde PHP / endpoint
+        let saldo = <?php echo $saldoInicial; ?>;
         let ficha = 10;
         let apuestas = [];
         let girando = false;
