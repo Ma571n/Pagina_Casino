@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'consumoEndpoint.php';  // ajusta el nombre/ruta si tu archivo se llama distinto
+require_once 'consumoEndpoint.php';  // ajusta el nombre si tu archivo se llama distinto
 
 $token = 'udp.2025';
 
@@ -46,19 +46,29 @@ if ($billetera !== null && isset($billetera['saldo'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Casino K - Ruleta</title>
+
+    <!-- Bootstrap (por si tu navbar lo usa) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #5D478B;
             color: white;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        main.ruleta-main {
+            flex: 1;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            margin: 0;
             padding: 20px;
-            box-sizing: border-box;
-            user-select: none;
         }
 
         .page-frame {
@@ -269,77 +279,100 @@ if ($billetera !== null && isset($billetera['saldo'])) {
         .chip-on-board.v-500 { background: #8E24AA; }
 
         #mensaje { margin-top: 10px; text-align: center; height: 20px; font-weight: 500; opacity: 0.9; }
+
+        footer.pie-pagina {
+            background: rgba(0,0,0,0.4);
+            color: #eee;
+            padding: 15px 0;
+            text-align: center;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
 
-    <div class="page-frame">
-        <div class="main-layout">
-            
-            <div class="left-panel">
-                <div class="ruleta-contenedor">
-                    <div class="marcador"></div>
-                    <div class="ruleta-giratoria" id="ruleta"></div>
-                    <div class="centro-rueda">
-                        <span class="texto-centro" id="resultado-num">K</span>
-                    </div>
-                </div>
-                <div id="mensaje">Haz tu apuesta</div>
-            </div>
+    <?php include 'navbar.php'; ?>
 
-            <div class="right-panel">
+    <main class="ruleta-main">
+        <div class="page-frame">
+            <div class="main-layout">
                 
-                <div class="header">
-                    <span class="logo">CASINO K</span>
+                <div class="left-panel">
+                    <div class="ruleta-contenedor">
+                        <div class="marcador"></div>
+                        <div class="ruleta-giratoria" id="ruleta"></div>
+                        <div class="centro-rueda">
+                            <span class="texto-centro" id="resultado-num">K</span>
+                        </div>
+                    </div>
+                    <div id="mensaje">Haz tu apuesta</div>
+                </div>
+
+                <div class="right-panel">
                     
-                    <div class="dashboard">
-                        <div class="stat-box">
-                            <span class="stat-label">Saldo</span>
-                            <span class="stat-value">$<span id="saldo"><?php echo $saldoInicial; ?></span></span>
+                    <div class="header">
+                        <span class="logo">CASINO K</span>
+                        
+                        <div class="dashboard">
+                            <div class="stat-box">
+                                <span class="stat-label">Saldo</span>
+                                <span class="stat-value">$<span id="saldo"><?php echo $saldoInicial; ?></span></span>
+                            </div>
+
+                            <div class="stat-box">
+                                <span class="stat-label">Apuesta</span>
+                                <span class="stat-value">$<span id="apuesta-total">0</span></span>
+                            </div>
+
+                            <div class="fichas-list">
+                                <div class="ficha f-10 activa" onclick="selFicha(10, this)">10</div>
+                                <div class="ficha f-50" onclick="selFicha(50, this)">50</div>
+                                <div class="ficha f-100" onclick="selFicha(100, this)">100</div>
+                                <div class="ficha f-500" onclick="selFicha(500, this)">500</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tablero">
+                        
+                        <div class="grid-nums" id="grid-nums">
+                            <div class="casilla bg-green cero" onclick="apostar('pleno', 0, this)">0</div>
                         </div>
 
-                        <div class="stat-box">
-                            <span class="stat-label">Apuesta</span>
-                            <span class="stat-value">$<span id="apuesta-total">0</span></span>
+                        <div class="grid-bottom">
+                            <div class="row-2">
+                                <div class="casilla btn-txt bg-red" onclick="apostar('color', 'rojo', this)">Rojo</div>
+                                <div class="casilla btn-txt bg-black" onclick="apostar('color', 'negro', this)">Negro</div>
+                                <div class="casilla btn-txt bg-blue" onclick="apostar('paridad', 'par', this)">Par</div>
+                                <div class="casilla btn-txt bg-yellow" onclick="apostar('paridad', 'impar', this)">Impar</div>
+                                <div class="btn-girar" id="btnGirar">GIRAR</div>
+                            </div>
+
+                            <div class="row-3">
+                                <div class="casilla btn-txt bg-red" onclick="apostar('mitad', 'bajo', this)">1 - 18</div>
+                                <div class="casilla btn-txt bg-red" onclick="apostar('mitad', 'alto', this)">19 - 36</div>
+                                <div class="casilla btn-txt" style="background: #555" onclick="borrar()">Borrar</div>
+                                <div class="casilla btn-txt" style="background: #555" onclick="deshacer()">Deshacer</div>
+                            </div>
                         </div>
 
-                        <div class="fichas-list">
-                            <div class="ficha f-10 activa" onclick="selFicha(10, this)">10</div>
-                            <div class="ficha f-50" onclick="selFicha(50, this)">50</div>
-                            <div class="ficha f-100" onclick="selFicha(100, this)">100</div>
-                            <div class="ficha f-500" onclick="selFicha(500, this)">500</div>
-                        </div>
                     </div>
                 </div>
 
-                <div class="tablero">
-                    
-                    <div class="grid-nums" id="grid-nums">
-                        <div class="casilla bg-green cero" onclick="apostar('pleno', 0, this)">0</div>
-                    </div>
-
-                    <div class="grid-bottom">
-                        <div class="row-2">
-                            <div class="casilla btn-txt bg-red" onclick="apostar('color', 'rojo', this)">Rojo</div>
-                            <div class="casilla btn-txt bg-black" onclick="apostar('color', 'negro', this)">Negro</div>
-                            <div class="casilla btn-txt bg-blue" onclick="apostar('paridad', 'par', this)">Par</div>
-                            <div class="casilla btn-txt bg-yellow" onclick="apostar('paridad', 'impar', this)">Impar</div>
-                            <div class="btn-girar" id="btnGirar">GIRAR</div>
-                        </div>
-
-                        <div class="row-3">
-                            <div class="casilla btn-txt bg-red" onclick="apostar('mitad', 'bajo', this)">1 - 18</div>
-                            <div class="casilla btn-txt bg-red" onclick="apostar('mitad', 'alto', this)">19 - 36</div>
-                            <div class="casilla btn-txt" style="background: #555" onclick="borrar()">Borrar</div>
-                            <div class="casilla btn-txt" style="background: #555" onclick="deshacer()">Deshacer</div>
-                        </div>
-                    </div>
-
-                </div>
             </div>
-
         </div>
-    </div>
+    </main>
+
+    <footer class="pie-pagina">
+        <div class="container">
+            <p class="mb-0">
+                &copy; 2024 Casino de los K · Proyecto académico UDP
+            </p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS (para navbar modal, etc.) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
         // saldo inicial viene desde PHP / endpoint
@@ -349,6 +382,8 @@ if ($billetera !== null && isset($billetera['saldo'])) {
         let girando = false;
         window.rotGlobal = 0;
 
+        const SALDO_KEY = 'saldoActual';
+
         const nums = [0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26];
         const rojos = [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36];
 
@@ -357,6 +392,23 @@ if ($billetera !== null && isset($billetera['saldo'])) {
         const saldoTxt = document.getElementById('saldo');
         const apuestaTotalTxt = document.getElementById('apuesta-total'); 
         const msg = document.getElementById('mensaje');
+
+        function cargarSaldoInicial() {
+            const guardado = localStorage.getItem(SALDO_KEY);
+            const numGuardado = guardado !== null ? parseInt(guardado, 10) : NaN;
+
+            if (!isNaN(numGuardado)) {
+                saldo = numGuardado;
+            } else {
+                // Primera vez: guardar el saldo que vino desde el endpoint
+                localStorage.setItem(SALDO_KEY, saldo);
+            }
+            saldoTxt.innerText = saldo;
+        }
+
+        function guardarSaldo() {
+            localStorage.setItem(SALDO_KEY, saldo);
+        }
 
         function init() {
             const ang = 360 / nums.length;
@@ -420,6 +472,7 @@ if ($billetera !== null && isset($billetera['saldo'])) {
             if(girando || saldo < ficha) return;
             saldo -= ficha;
             saldoTxt.innerText = saldo;
+            guardarSaldo();
             apuestas.push({tipo, val, cant: ficha});
             
             actualizarDisplayTotal();
@@ -439,6 +492,7 @@ if ($billetera !== null && isset($billetera['saldo'])) {
             apuestas.forEach(a => saldo += a.cant);
             apuestas = [];
             saldoTxt.innerText = saldo;
+            guardarSaldo();
             actualizarDisplayTotal();
             document.querySelectorAll('.chip-on-board').forEach(e => e.remove());
             msg.innerText = "Mesa limpia";
@@ -449,6 +503,7 @@ if ($billetera !== null && isset($billetera['saldo'])) {
             const ult = apuestas.pop();
             saldo += ult.cant;
             saldoTxt.innerText = saldo;
+            guardarSaldo();
             actualizarDisplayTotal();
             const chips = document.querySelectorAll('.chip-on-board');
             if(chips.length) chips[chips.length-1].remove();
@@ -511,6 +566,7 @@ if ($billetera !== null && isset($billetera['saldo'])) {
 
             saldo += ganancia;
             saldoTxt.innerText = saldo;
+            guardarSaldo();
             document.getElementById('resultado-num').innerText = n;
 
             const neto = ganancia - totalApuesta;
@@ -523,6 +579,7 @@ if ($billetera !== null && isset($billetera['saldo'])) {
             actualizarDisplayTotal(); 
         }
 
+        cargarSaldoInicial();
         init();
     </script>
 </body>
