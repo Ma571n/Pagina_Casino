@@ -120,10 +120,6 @@ $usuarioLogueado = isset($_SESSION['usuario']);
                     <label for="regUsername">Usuario</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="email" class="form-control" id="regEmail" name="email" placeholder="Correo" required>
-                    <label for="regEmail">Correo</label>
-                </div>
-                <div class="form-floating mb-3">
                     <input type="date" class="form-control" id="regFecha" name="fecha_nacimiento" required>
                     <label for="regFecha">Fecha de nacimiento</label>
                 </div>
