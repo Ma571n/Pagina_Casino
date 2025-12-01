@@ -5,14 +5,9 @@ if (session_status() === PHP_SESSION_NONE) {
 
 $usuarioLogueado = isset($_SESSION['usuario']);
 
-// Capturar error de login si existe (solo para fallback si AJAX falla)
 $errorLogin = $_SESSION['error'] ?? null;
 unset($_SESSION['error']);
 ?>
-
-<!-- ===================== -->
-<!-- NAVBAR -->
-<!-- ===================== -->
 <nav class="navbar navbar-expand-lg fixed-top custom-navbar">
     <div class="container">
         <a class="navbar-brand" href="index.php">
@@ -50,10 +45,6 @@ unset($_SESSION['error']);
 </nav>
 
 <?php if (!$usuarioLogueado): ?>
-
-<!-- ===================== -->
-<!-- MODAL LOGIN -->
-<!-- ===================== -->
 <div class="modal fade" id="loginModal" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -89,9 +80,6 @@ unset($_SESSION['error']);
   </div>
 </div>
 
-<!-- ===================== -->
-<!-- MODAL REGISTRO -->
-<!-- ===================== -->
 <div class="modal fade" id="registroModal" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -136,14 +124,8 @@ unset($_SESSION['error']);
 
 <?php endif; ?>
 
-<!-- ===================== -->
-<!-- BOOTSTRAP JS -->
-<!-- ===================== -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- ===================== -->
-<!-- LOGIN AJAX -->
-<!-- ===================== -->
 <script>
 document.getElementById("loginForm")?.addEventListener("submit", function(e){
     e.preventDefault();
@@ -158,7 +140,7 @@ document.getElementById("loginForm")?.addEventListener("submit", function(e){
     .then(res => res.json())
     .then(data => {
         if(data.success){
-            location.reload(); // recarga index.php y muestra navbar logueado
+            location.reload(); 
         } else {
             errorDiv.style.display = "block";
             errorDiv.textContent = data.error;
@@ -170,9 +152,6 @@ document.getElementById("loginForm")?.addEventListener("submit", function(e){
     });
 });
 
-// =====================
-// REGISTRO AJAX
-// =====================
 document.getElementById("registroForm")?.addEventListener("submit", function(e){
     e.preventDefault();
     const form = e.target;
@@ -186,7 +165,7 @@ document.getElementById("registroForm")?.addEventListener("submit", function(e){
     .then(res => res.json())
     .then(data => {
         if(data.success){
-            location.href = "index.php"; // redirige con navbar de sesión iniciada
+            location.href = "index.php";
         } else {
             errorDiv.style.display = "block";
             errorDiv.textContent = data.error;
