@@ -4,19 +4,13 @@ require_once "../BackEnd/api/v1/conexion.php";
 
 header('Content-Type: application/json');
 
-// =====================
-// LOGOUT
-// =====================
 if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     session_unset();
     session_destroy();
-    header("Location: index.php"); // redirige al index sin sesión
+    header("Location: index.php"); 
     exit;
 }
 
-// =====================
-// LOGIN AJAX
-// =====================
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'login') {
 
     $username = trim($_POST['username']);

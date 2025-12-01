@@ -7,7 +7,6 @@ header('Content-Type: application/json; charset=utf-8');
 
 $token = 'udp.2025';
 
-// 1) Leer JSON del fetch
 $rawBody = file_get_contents('php://input');
 $data    = json_decode($rawBody, true);
 
@@ -16,8 +15,8 @@ if (!is_array($data)) {
     exit;
 }
 
-$monto     = $data['monto']      ?? null; // puede ser + o -
-$partidaId = $data['partida_id'] ?? null; // por ahora no lo usamos en BD
+$monto     = $data['monto']      ?? null; -
+$partidaId = $data['partida_id'] ?? null; 
 
 if ($monto === null) {
     echo json_encode(['ok' => false, 'error' => 'Falta monto']);
@@ -26,7 +25,6 @@ if ($monto === null) {
 
 $monto = (int)$monto;
 
-// 2) Determinar billetera desde la API UDP
 $billetera   = null;
 $idBilletera = $_SESSION['usuario']['id_billetera'] ?? null;
 
@@ -63,7 +61,6 @@ if ($billetera === null || !isset($billetera['id'])) {
 $idBilleteraReal = (int)$billetera['id'];
 $saldoBase       = isset($billetera['saldo']) ? (int)$billetera['saldo'] : 0;
 
-// 3) Guardar movimiento tipo 'juego' (+ gana, - pierde)
 try {
     $stmt = $pdo->prepare("
         INSERT INTO billetera_movimientos (billetera_id_api, tipo, monto)
@@ -78,7 +75,6 @@ try {
     exit;
 }
 
-// 4) Calcular saldo final igual que antes
 $stmt = $pdo->prepare("
     SELECT COALESCE(SUM(monto), 0) AS total_mov
     FROM billetera_movimientos

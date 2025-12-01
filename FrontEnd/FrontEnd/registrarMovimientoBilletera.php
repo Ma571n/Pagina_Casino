@@ -1,13 +1,13 @@
 <?php
 session_start();
 require_once 'consumoEndpoint.php';
-require_once 'db.php'; // conexión PDO a tu BD
+require_once 'db.php';
 
 header('Content-Type: application/json; charset=utf-8');
 
 $token = 'udp.2025';
 
-// 1) Leer JSON enviado por fetch
+
 $rawBody = file_get_contents('php://input');
 $data    = json_decode($rawBody, true);
 
@@ -16,8 +16,8 @@ if (!is_array($data)) {
     exit;
 }
 
-$tipo  = $data['tipo']  ?? null;   // 'carga' | 'retiro'
-$monto = $data['monto'] ?? null;   // número
+$tipo  = $data['tipo']  ?? null;   
+$monto = $data['monto'] ?? null;   
 
 if ($tipo === null || $monto === null) {
     echo json_encode(['ok' => false, 'error' => 'Faltan datos (tipo o monto)']);
@@ -26,11 +26,9 @@ if ($tipo === null || $monto === null) {
 
 $monto = (int) $monto;
 
-// 2) Determinar billetera desde la API UDP (igual que antes)
 $billetera   = null;
 $idBilletera = $_SESSION['usuario']['id_billetera'] ?? null;
 
-// a) si hay id_billetera en sesión, lo usamos
 if ($idBilletera !== null) {
     $resp = getApiData(
         "https://udp.coningenio.cl/casino/api/v1/billetera/?id=" . urlencode($idBilletera),
@@ -41,7 +39,6 @@ if ($idBilletera !== null) {
     }
 }
 
-// b) fallback: primera billetera activa
 if ($billetera === null) {
     $resp = getApiData(
         "https://udp.coningenio.cl/casino/api/v1/billetera/",
@@ -65,18 +62,16 @@ if ($billetera === null || !isset($billetera['id'])) {
 $idBilleteraReal = (int) $billetera['id'];
 $saldoBase       = isset($billetera['saldo']) ? (int)$billetera['saldo'] : 0;
 
-// 3) Normalizar el monto según el tipo
-// En la tabla local guardamos positivo si suma, negativo si resta.
 $tipoMovimiento = null;
 switch ($tipo) {
     case 'carga':
         $tipoMovimiento = 'carga';
-        $monto = abs($monto);   // suma saldo
+        $monto = abs($monto);   
         break;
 
     case 'retiro':
         $tipoMovimiento = 'retiro';
-        $monto = -abs($monto);  // resta saldo
+        $monto = -abs($monto);  
         break;
 
     default:
@@ -84,7 +79,6 @@ switch ($tipo) {
         exit;
 }
 
-// 4) INSERT en tu tabla local billetera_movimientos
 try {
     $stmt = $pdo->prepare("
         INSERT INTO billetera_movimientos (billetera_id_api, tipo, monto)
@@ -100,7 +94,6 @@ try {
     exit;
 }
 
-// 5) Calcular la suma de TODOS los movimientos locales para esta billetera
 $stmt = $pdo->prepare("
     SELECT COALESCE(SUM(monto), 0) AS total_mov
     FROM billetera_movimientos
@@ -110,10 +103,8 @@ $stmt->execute([':id' => $idBilleteraReal]);
 $row      = $stmt->fetch();
 $totalMov = $row ? (int)$row['total_mov'] : 0;
 
-// 6) Saldo final = saldo base de la API + lo que llevas movido localmente
 $nuevoSaldo = $saldoBase + $totalMov;
 
-// 7) Respuesta al JS
 echo json_encode([
     'ok'          => true,
     'nuevo_saldo' => $nuevoSaldo

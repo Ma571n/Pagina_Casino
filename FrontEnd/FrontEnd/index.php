@@ -2,7 +2,6 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Incluir el sistema de sesiones y navbar
 session_start();
 include_once('consumoEndpoint.php');
 
@@ -240,7 +239,6 @@ $nombreUsuario = isset($_SESSION['usuario']['nombre'])
     }
 
     if ($mesaSeleccionada !== null):
-        // Datos de la mesa (pero ya NO mostraremos nombre ni descripción)
         $apuestaMin   = number_format($mesaSeleccionada['apuesta']['minima'], 0, ',', '.');
         $apuestaMax   = number_format($mesaSeleccionada['apuesta']['maxima'], 0, ',', '.');
         $estado       = htmlspecialchars($mesaSeleccionada['estado']['nombre']);
@@ -252,8 +250,6 @@ $nombreUsuario = isset($_SESSION['usuario']['nombre'])
                 <div class="carousel-item active">
 
                     <?php
-                    // Si está logueado: link directo a la ruleta
-                    // Si NO está logueado: abre modal de login
                     $attrHref   = '';
                     $attrExtras = '';
 
@@ -265,7 +261,6 @@ $nombreUsuario = isset($_SESSION['usuario']['nombre'])
                     }
                     ?>
 
-                    <!-- Imagen clickeable -->
                     <a <?php echo $attrHref . ' ' . $attrExtras; ?> style="display:block;">
                         <img src="https://blog.meridianbet.pe/wp-content/uploads/2025/06/Ruleta-Europea-Casino-juegos-de-mesa.jpg"
                              class="d-block w-100"
@@ -274,10 +269,6 @@ $nombreUsuario = isset($_SESSION['usuario']['nombre'])
                     </a>
 
                     <div class="carousel-caption d-none d-md-block">
-
-                        <!-- 🔥 Quitamos nombre, descripción y nombre del juego -->
-
-                        <!-- Solo mostramos apuestas + estado -->
                         <p>
                             Apuesta mínima: 10 |
                             Máxima: 500<br>
@@ -296,12 +287,6 @@ $nombreUsuario = isset($_SESSION['usuario']['nombre'])
         </p>
     <?php endif; ?>
 </section>
-
-
-
-
-        
-        <!-- Barra de menú -->
         <section>
             <div class="barra-reglas container rounded-3">
                 <div class="barra-reglas-memor row text-center p-4">

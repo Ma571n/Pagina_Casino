@@ -1,15 +1,13 @@
 <?php
 session_start();
 require_once 'consumoEndpoint.php';
-require_once 'db.php';  // conexión a la BD local
+require_once 'db.php';  
 
 $token = 'udp.2025';
 
-// 1) Determinar qué billetera usar
 $billetera = null;
 $idBilletera = $_SESSION['usuario']['id_billetera'] ?? null;
 
-// a) Si tienes id_billetera en sesión, intenta usarlo
 if ($idBilletera !== null) {
     $resp = getApiData(
         "https://udp.coningenio.cl/casino/api/v1/billetera/?id=" . urlencode($idBilletera),
@@ -20,7 +18,6 @@ if ($idBilletera !== null) {
     }
 }
 
-// b) Si no hay nada en sesión o falló, toma la primera billetera activa como demo
 if ($billetera === null) {
     $resp = getApiData(
         "https://udp.coningenio.cl/casino/api/v1/billetera/",
@@ -30,7 +27,6 @@ if ($billetera === null) {
         foreach ($resp as $b) {
             if (!empty($b['activo'])) {
                 $billetera = $b;
-                // Guardar en sesión para que todas las páginas usen la misma billetera
                 $_SESSION['usuario']['id_billetera'] = $b['id'] ?? null;
                 break;
             }
@@ -38,7 +34,6 @@ if ($billetera === null) {
     }
 }
 
-// Calcular saldo base desde la API + movimientos locales
 $saldoBase       = 0;
 $idBilleteraReal = null;
 
@@ -61,7 +56,6 @@ if ($idBilleteraReal !== null) {
 
 $saldoInicial = $saldoBase + $totalMov;
 
-// 🔹 clave única de saldo/localStorage si aún la usas en JS
 $userKey = 'anonimo';
 if (isset($_SESSION['usuario']['id'])) {
     $userKey = 'user_' . $_SESSION['usuario']['id'];
@@ -75,7 +69,6 @@ if (isset($_SESSION['usuario']['id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Casino K - Ruleta</title>
 
-    <!-- Bootstrap (por si tu navbar lo usa) -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     
     <style>
@@ -399,11 +392,9 @@ if (isset($_SESSION['usuario']['id'])) {
         </div>
     </footer>
 
-    <!-- Bootstrap JS (para navbar modal, etc.) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        // saldo inicial viene desde PHP / endpoint
         let saldo = <?php echo $saldoInicial; ?>;
         let ficha = 10;
         let apuestas = [];
@@ -422,13 +413,10 @@ if (isset($_SESSION['usuario']['id'])) {
         const msg = document.getElementById('mensaje');
 
         function cargarSaldoInicial() {
-    // Usar SIEMPRE el saldo que viene del backend
     saldoTxt.innerText = saldo;
 }
 
 function guardarSaldo() {
-    // Ya no usamos localStorage; el saldo real se guarda en la BD
-    // (esta función queda por compatibilidad para no cambiar más código)
 }
 
         function init() {
@@ -590,29 +578,27 @@ function guardarSaldo() {
                 if (gano) ganancia += ap.cant * (m+1);
             });
 
-            // Actualizar saldo en el front
             saldo += ganancia;
             saldoTxt.innerText = saldo;
             guardarSaldo();
             document.getElementById('resultado-num').innerText = n;
 
-            const neto = ganancia - totalApuesta; // puede ser +, -, o 0
+            const neto = ganancia - totalApuesta; 
 
-            // 👉 Registrar el movimiento en el backend si hubo cambio real
+            
             if (neto !== 0) {
                 fetch('registrarMovimientoJuego.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        monto: neto,       // positivo si ganancia neta, negativo si pérdida
-                        partida_id: null   // si más adelante usas id de partida, lo mandas aquí
+                        monto: neto,      
+                        partida_id: null   
                     })
                 })
                 .then(r => r.json())
                 .then(data => {
                     console.log('Respuesta registrarMovimientoJuego:', data);
                     if (data.ok && typeof data.nuevo_saldo === 'number') {
-                        // Ajustar saldo al real calculado en PHP (API + movimientos)
                         saldo = data.nuevo_saldo;
                         saldoTxt.innerText = saldo;
                     }
@@ -622,12 +608,10 @@ function guardarSaldo() {
                 });
             }
 
-            // Mensaje al jugador
             if (neto > 0)      msg.innerText = `¡GANASTE $${neto}! Salió el ${n}`;
             else if (neto < 0) msg.innerText = `Salió el ${n}. Perdiste.`;
             else               msg.innerText = `Salió el ${n}. Empate.`;
 
-            // Limpiar fichas del tablero
             document.querySelectorAll('.chip-on-board').forEach(e => e.remove());
             apuestas = [];
             actualizarDisplayTotal(); 
