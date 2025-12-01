@@ -19,7 +19,6 @@ if ($idBilletera !== null) {
     }
 }
 
-// Si no hay nada en sesión o falló, tomar la primera billetera activa y guardarla en sesión
 if ($billetera === null) {
     $resp = getApiData(
         "https://udp.coningenio.cl/casino/api/v1/billetera/",
@@ -36,7 +35,6 @@ if ($billetera === null) {
     }
 }
 
-// Calcular saldo base desde la API + movimientos locales
 $saldoBase       = 0;
 $idBilleteraReal = null;
 
@@ -107,7 +105,6 @@ $saldoInicial = $saldoBase + $totalMov;
     margin-top: 3rem;
 }
 
-/* Estilo morado de la pestaña activa */
 #barraInfo .nav-link.active {
     background-color: #5534a1 !important;
     color: #fff !important;
@@ -124,10 +121,8 @@ $saldoInicial = $saldoBase + $totalMov;
     <?php include 'navbar.php'; ?>
 
     <main>
-        <!-- Barra superior PERFIL -->
         <section id="barraInfo" class="barra-principal"></section>
 
-        <!-- Barra BILLETERA -->
         <section class="mt-2">
             <div class="container d-flex justify-content-between align-items-center flex-wrap gap-3">
 
@@ -159,7 +154,6 @@ $saldoInicial = $saldoBase + $totalMov;
             </div>
         </section>
 
-        <!-- Card con formulario de retiro -->
         <section class="card-perfil">
             <h2 class="h5 mb-3">Retirar dinero de la billetera</h2>
 
@@ -198,7 +192,6 @@ $saldoInicial = $saldoBase + $totalMov;
         </div>
     </footer>
 
-    <!-- Sincronizar saldo + lógica de retiro (front, localStorage) -->
     <script>
     const spanSaldoBarra = document.getElementById('saldoBarraBilletera');
     let saldoActual = <?php echo $saldoInicial; ?>;
@@ -235,7 +228,7 @@ $saldoInicial = $saldoBase + $totalMov;
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 tipo: 'retiro',
-                monto: monto   // lo mandamos positivo, tipo_id=2 indica que es retiro
+                monto: monto   
             })
         })
         .then(r => r.json())
@@ -265,10 +258,5 @@ $saldoInicial = $saldoBase + $totalMov;
         });
     });
 </script>
-
-
-
-
-
 </body>
 </html>

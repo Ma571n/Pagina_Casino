@@ -68,18 +68,14 @@
 </head>
 
 <body>
-  <!-- Navbar PHP integrado -->
   <?php include 'navbar.php'; ?>
    
 
   <main>
-    <!-- Barra de tabs de perfil -->
     <section id="barraInfo" class="barra-principal"></section>
 
-    <!-- Tarjeta -->
     <section class="card-perfil">
       <form id="formSeguridad">
-        <!-- Contraseña actual (precargada con 12345) -->
         <label class="form-label" for="oldPassword">Contraseña actual</label>
         <div class="input-group">
           <input id="oldPassword" type="password" class="form-control input-rounded" value="12345">
@@ -88,7 +84,6 @@
           </span>
         </div>
 
-        <!-- Nueva contraseña -->
         <label class="form-label mt-3" for="newPassword">Nueva contraseña</label>
         <div class="input-group">
           <input id="newPassword" type="password" class="form-control input-rounded" placeholder="Escribe tu nueva contraseña">
@@ -97,7 +92,6 @@
           </span>
         </div>
 
-        <!-- Repetir nueva contraseña -->
         <label class="form-label mt-3" for="rePassword">Repetir nueva contraseña</label>
         <div class="input-group">
           <input id="rePassword" type="password" class="form-control input-rounded" placeholder="Repite tu nueva contraseña">
@@ -115,13 +109,11 @@
 
     <div id="menuFooter"></div>
 
-    <!-- Scripts -->
     <script src="navbarconlogin.js"></script>
     <script src="footer.js"></script>
     <script src="barraInformacion.php"></script>
     <script src="autentificacion.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Footer -->
 <footer class="pie-pagina">
         <div class="container text-center">
             <p>&copy; 2024 El casino de los K. Proyecto académico.</p>

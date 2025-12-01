@@ -1,4 +1,4 @@
-// Orden real de los números en una ruleta americana
+
 const NUMEROS_RULETA = [
     "0", "28", "9", "26", "30", "11", "7", "20", "32",
     "17", "5", "22", "34", "15", "3", "24", "36", "13",
@@ -7,7 +7,6 @@ const NUMEROS_RULETA = [
     "14", "2"
   ];
   
-  // Colores de la ruleta americana
   const COLORES = {
     verde: ["0", "00"],
     rojo: [
@@ -20,7 +19,6 @@ const NUMEROS_RULETA = [
     ]
   };
   
-  // Devuelve "rojo", "negro" o "verde" según el número
   function obtenerColor(num) {
     if (COLORES.verde.includes(num)) return "verde";
     if (COLORES.rojo.includes(num)) return "rojo";
@@ -30,8 +28,6 @@ const NUMEROS_RULETA = [
   
   let ruletaGirando = false;
   const TIEMPO_GIRO_MS = 4000;
-  
-  // Ángulo acumulado para que siempre gire hacia el mismo lado
   let anguloActual = 0;
   
   function girarRuleta() {
@@ -47,33 +43,25 @@ const NUMEROS_RULETA = [
       return;
     }
   
-    // Vueltas completas (entre 3 y 5)
     const vueltas = Math.floor(Math.random() * 3) + 3;
   
-    // Ángulo extra aleatorio (0–360)
     const gradosExtra = Math.floor(Math.random() * 360);
   
-    // Sumamos al ángulo actual → siempre gira hacia el mismo lado
     anguloActual += vueltas * 360 + gradosExtra;
   
-    // Aplicar la rotación
     ruletaImg.style.transform = `rotate(${anguloActual}deg)`;
   
-    // Elegir número aleatorio de la ruleta americana
     const index = Math.floor(Math.random() * NUMEROS_RULETA.length);
     const numeroGanador = NUMEROS_RULETA[index];
   
-    // Determinar color del número
     const colorGanador = obtenerColor(numeroGanador);
   
-    // Esperar a que termine la animación para mostrar el resultado
     setTimeout(() => {
       let colorClase = "";
       if (colorGanador === "rojo") colorClase = "red";
       else if (colorGanador === "negro") colorClase = "black";
-      else colorClase = "green"; // 0 y 00
+      else colorClase = "green"; 
   
-      // Mostrar el chip del número ganador
       resultadoChip.innerHTML = `
         <span class="chip ${colorClase} chip-big">
           ${numeroGanador}
@@ -83,8 +71,6 @@ const NUMEROS_RULETA = [
       ruletaGirando = false;
     }, TIEMPO_GIRO_MS);
   }
-  
-  // Conectar botón al cargar el DOM
   document.addEventListener("DOMContentLoaded", () => {
     const botonGirar = document.getElementById("btn-girar");
     if (botonGirar) {
