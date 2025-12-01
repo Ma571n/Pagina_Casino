@@ -146,20 +146,16 @@
 </head>
 
 <body>
-    <!-- Navbar PHP integrado -->
     <?php include 'navbar.php'; ?>
 
     <main>
-        <!-- Tabs a todo el ancho, pegadas bajo la navbar -->
         <section class="tabs-wrap full-bleed">
             <section id="barraInfo" class="barra-principal"></section>
         </section>
 
-        <!-- Tarjeta con formulario en 2 columnas -->
         <section class="card-perfil">
             <form id="formPerfil">
                 <div class="form-grid">
-                    <!-- Columna izquierda -->
                     <div>
                         <label class="form-label" for="username">Username (RUT)</label>
                         <input id="username" name="username" type="text" class="form-control input-rounded"
@@ -173,8 +169,6 @@
                         </div>
 
                     </div>
-
-                    <!-- Columna derecha -->
                     <div>
                         <label class="form-label" for="nombre">Nombre y Apellido</label>
                         <input id="nombre" name="nombre" type="text" class="form-control input-rounded"
@@ -193,7 +187,6 @@
         </section>
     </main>
 
-    <!-- Contenedor del footer (div para evitar <footer> anidado) -->
     <div id="menuFooter"></div>
 
     <!-- Scripts -->

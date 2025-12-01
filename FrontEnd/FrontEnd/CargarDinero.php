@@ -5,7 +5,6 @@ require_once 'db.php';
 
 $token = 'udp.2025';
 
-// MISMO CÓDIGO para billetera/saldo:
 $billetera = null;
 $idBilletera = $_SESSION['usuario']['id_billetera'] ?? null;
 
@@ -19,7 +18,6 @@ if ($idBilletera !== null) {
     }
 }
 
-// Si no hay nada en sesión o falló, tomar la primera billetera activa y guardarla en sesión
 if ($billetera === null) {
     $resp = getApiData(
         "https://udp.coningenio.cl/casino/api/v1/billetera/",
@@ -36,7 +34,6 @@ if ($billetera === null) {
     }
 }
 
-// Calcular saldo base desde la API + movimientos locales
 $saldoBase       = 0;
 $idBilleteraReal = null;
 
@@ -158,7 +155,6 @@ $saldoInicial = $saldoBase + $totalMov;
             </div>
         </section>
 
-        <!-- Card con formulario de carga -->
         <section class="card-perfil">
             <h2 class="h5 mb-3">Cargar dinero a la billetera</h2>
 
@@ -197,7 +193,6 @@ $saldoInicial = $saldoBase + $totalMov;
         </div>
     </footer>
 
-    <!-- Sincronizar saldo + lógica de carga (solo front, via localStorage) -->
     <script>
     const spanSaldoBarra = document.getElementById('saldoBarraBilletera');
     let saldoActual = <?php echo $saldoInicial; ?>;
@@ -233,10 +228,9 @@ $saldoInicial = $saldoBase + $totalMov;
     })
     .then(r => r.json())
     .then(data => {
-        console.log('Respuesta registrarMovimientoBilletera:', data); // 👈 para ver en consola
+        console.log('Respuesta registrarMovimientoBilletera:', data); 
 
         if (!data.ok) {
-            // 🔴 MOSTRAR EL ERROR REAL QUE DEVUELVE PHP
             msgCargar.textContent = data.error
                 ? 'Error: ' + data.error
                 : 'Error al registrar la carga.';
@@ -263,10 +257,5 @@ $saldoInicial = $saldoBase + $totalMov;
 });
 
 </script>
-
-
-
-
-
 </body>
 </html>

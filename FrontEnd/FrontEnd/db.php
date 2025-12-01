@@ -1,5 +1,4 @@
 <?php
-// ⚠️ Datos del servidor de la UDP
 $host     = 'localhost';
 $dbname   = 'coningen_udp252_losk';
 $user     = 'coningen_udp252_losk';

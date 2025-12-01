@@ -1,4 +1,4 @@
-// Footer con login (para usuarios autenticados)
+
 function getFooterLogged(_id, username) {
     const elemento = document.getElementById(_id);
     elemento.innerHTML = `
@@ -13,8 +13,6 @@ function getFooterLogged(_id, username) {
         </footer>
     `;
 }
-
-// Footer sin login (para usuarios no autenticados)
 function getFooter(_id) {
     const elemento = document.getElementById(_id);
     elemento.innerHTML = `

@@ -5,11 +5,9 @@ require_once 'db.php';
 
 $token = 'udp.2025';
 
-// 1) Determinar qué billetera usar
 $billetera = null;
 $idBilletera = $_SESSION['usuario']['id_billetera'] ?? null;
 
-// a) Si tienes id_billetera en sesión, intenta usarla
 if ($idBilletera !== null) {
     $resp = getApiData(
         "https://udp.coningenio.cl/casino/api/v1/billetera/?id=" . urlencode($idBilletera),
@@ -20,7 +18,6 @@ if ($idBilletera !== null) {
     }
 }
 
-// b) Si no hay nada en sesión o falló, toma la primera billetera activa como demo
 if ($billetera === null) {
     $resp = getApiData(
         "https://udp.coningenio.cl/casino/api/v1/billetera/",
@@ -30,17 +27,12 @@ if ($billetera === null) {
         foreach ($resp as $b) {
             if (!empty($b['activo'])) {
                 $billetera = $b;
-                // Guardar en sesión para que TODAS las páginas usen la misma billetera
                 $_SESSION['usuario']['id_billetera'] = $b['id'] ?? null;
                 break;
             }
         }
     }
 }
-
-// ================== Saldo y movimientos desde la base local ==================
-
-// Saldo base que viene del endpoint
 $saldoBase       = 0;
 $idBilleteraReal = null;
 
@@ -53,7 +45,6 @@ $movimientos = [];
 $totalMov    = 0;
 
 if ($idBilleteraReal !== null) {
-    // 1) Movimientos para el histórico
     $stmt = $pdo->prepare("
         SELECT id, billetera_id_api, tipo, monto, fecha
         FROM billetera_movimientos
@@ -63,7 +54,6 @@ if ($idBilleteraReal !== null) {
     $stmt->execute([':id' => $idBilleteraReal]);
     $movimientos = $stmt->fetchAll();
 
-    // 2) Suma total de montos (positivos y negativos)
     $stmt2 = $pdo->prepare("
         SELECT COALESCE(SUM(monto), 0) AS total_mov
         FROM billetera_movimientos
@@ -73,8 +63,6 @@ if ($idBilleteraReal !== null) {
     $row      = $stmt2->fetch();
     $totalMov = $row ? (int)$row['total_mov'] : 0;
 }
-
-// Saldo inicial mostrado en la barra = saldo API + movimientos
 $saldoInicial = $saldoBase + $totalMov;
 ?>
 
@@ -306,9 +294,8 @@ $saldoInicial = $saldoBase + $totalMov;
         </div>
     </footer>
 
-    <!-- Sincronizar saldo con localStorage (igual que la ruleta) -->
      <?php
-// Clave única por usuario
+
 $userKey = 'anonimo';
 
 if (isset($_SESSION['usuario']['id'])) {
